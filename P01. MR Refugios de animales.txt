@@ -34,7 +34,7 @@ Animales {
 }
 
 
-Tarea {
+Tareas {
         id_tarea : entero PK,
         fecha : fecha y hora,
         actividad : texto (50),
@@ -44,4 +44,5 @@ Tarea {
 que pertenece a Animales,
 id_refugio : entero FK
         que pertenece a Refugios
+
 }
