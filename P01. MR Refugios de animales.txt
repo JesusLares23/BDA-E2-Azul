@@ -10,17 +10,30 @@ Voluntarios {
         especialidad : texto(20),
         correo : texto(50),
         telefono : texto(20)
+        id_especialidad entero FK 
+                -pertenece a Especialidades
+}
+
+Especialidades{
+        id_especialidad: entero PK,
+        nombre: texto(50)
+        
+
 }
 
 
 Refugios {
         id_refugio : entero PK,
         nombre : texto(50),
-        ubicación : point,
         capacidad : entero,
-        nombre_responsable : texto(100)
+        nombre_responsable : texto(100),
+        ciudad: texto(100),
+        estado: texto(100),
+        calle: texto(100),
+        colonia: texto(100),
+        numero_exterior: texto(100)
+        
 }
-
 
 Animales {
         id_animal : entero PK,
@@ -46,3 +59,4 @@ id_refugio : entero FK
         que pertenece a Refugios
 
 }
+
