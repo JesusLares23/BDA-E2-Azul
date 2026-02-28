@@ -1,0 +1,62 @@
+﻿Modelo Relacional: Sistema de Registro de Voluntariado en Refugios de Animales
+
+
+
+
+Voluntarios {
+        id_voluntario : entero PK,
+        nombre : texto(100),
+        edad : entero,
+        especialidad : texto(20),
+        correo : texto(50),
+        telefono : texto(20)
+        id_especialidad entero FK 
+                -pertenece a Especialidades
+}
+
+Especialidades{
+        id_especialidad: entero PK,
+        nombre: texto(50)
+        
+
+}
+
+
+Refugios {
+        id_refugio : entero PK,
+        nombre : texto(50),
+        capacidad : entero,
+        nombre_responsable : texto(100),
+        ciudad: texto(100),
+        estado: texto(100),
+        calle: texto(100),
+        colonia: texto(100),
+        numero_exterior: texto(100)
+        
+}
+
+Animales {
+        id_animal : entero PK,
+        nombre : texto(30),
+        especie : texto(30),
+        edad : entero,
+        estado_salud : texto(20),
+        fecha_ingreso : fecha y hora,
+        id_refugio : entero FK
+                que pertenece a Refugios
+}
+
+
+Tareas {
+        id_tarea : entero PK,
+        fecha : fecha y hora,
+        actividad : texto (50),
+        id_voluntario : entero FK
+                que pertenece a Voluntarios,
+        id_animal : entero FK 
+que pertenece a Animales,
+id_refugio : entero FK
+        que pertenece a Refugios
+
+}
+
