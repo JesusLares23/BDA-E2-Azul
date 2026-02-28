@@ -35,7 +35,7 @@ CREATE TABLE Animales (
   nombre varchar(30) not null,
   especie varchar(30) not null,
   edad int not null,
-  fecha_ingreso datetime not null,
+  fecha_ingreso date not null,
   id_refugio int not null,
   
   foreign key (id_refugio) references Refugios(id_refugio)
