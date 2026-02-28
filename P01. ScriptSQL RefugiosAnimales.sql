@@ -3,20 +3,31 @@ CREATE DATABASE IF NOT EXISTS RefugiosAnimales;
 
 USE refugiosAnimales;
 
+CREATE TABLE Especialidades (
+  id_especialidad int primary key auto_increment,
+  nombre varchar(100) not null
+);
+
 CREATE TABLE Voluntarios (
   id_voluntario int primary key auto_increment,
   nombre varchar(100) not null,
   edad int not null,
-  especialidad varchar(20) not null,
   correo varchar(50) not null,
-  telefono varchar(20) not null
+  telefono varchar(20) not null,
+  id_especialidad int not null,
+  foreign key(id_especialidad) references Especialidades(id_especialidad)
 );
 
 CREATE TABLE Refugios (
   id_refugio int primary key auto_increment,
   nombre varchar(50) not null,
-  ubicacion point not null,
-  nombre_responsable varchar(100) not null
+  capacidad int not null,
+  nombre_responsable varchar(100) not null,
+  ciudad varchar(100) not null,
+  estado varchar(100) not null,
+  calle varchar(100) not null,
+  colonia varchar(100) not null,
+  numero_exterior varchar(100) not null
 );
 
 CREATE TABLE Animales (
