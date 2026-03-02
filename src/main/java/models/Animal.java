@@ -18,16 +18,16 @@ public class Animal {
     public Animal() {
     }
 
-    public Animal(int idAnimal, Refugio refugio, String nombre, 
-            LocalDate fechaNacimiento, String especie, String estadoSalud, 
-            LocalDate fechaIngreso) {
+    public Animal(int idAnimal, String nombre, LocalDate fechaNacimiento, 
+            String especie, String estadoSalud, LocalDate fechaIngreso, 
+            Refugio refugio) {
         this.idAnimal = idAnimal;
-        this.refugio = refugio;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         this.especie = especie;
         this.estadoSalud = estadoSalud;
         this.fechaIngreso = fechaIngreso;
+        this.refugio = refugio;
     }
 
     public int getIdAnimal() {
@@ -35,13 +35,6 @@ public class Animal {
     }
     public void setIdAnimal(int idAnimal) {
         this.idAnimal = idAnimal;
-    }
-
-    public Refugio getRefugio() {
-        return refugio;
-    }
-    public void setRefugio(Refugio refugio) {
-        this.refugio = refugio;
     }
 
     public String getNombre() {
@@ -66,7 +59,7 @@ public class Animal {
      * actual.
      */
     public int getEdad() {
-        return Period.between(fechaIngreso, LocalDate.now()).getYears();
+        return Period.between(fechaNacimiento, LocalDate.now()).getYears();
     }
 
     public String getEspecie() {
@@ -89,7 +82,12 @@ public class Animal {
     public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
-    
-    
+
+    public Refugio getRefugio() {
+        return refugio;
+    }
+    public void setRefugio(Refugio refugio) {
+        this.refugio = refugio;
+    }    
     
 }
