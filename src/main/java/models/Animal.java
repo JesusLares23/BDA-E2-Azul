@@ -1,12 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package models;
 import java.time.LocalDate;
 /**
  *
- * @author demib
+ * @author 00000207653, 00000233047, 00000233383, 00000252975
  */
 public class Animal {
     private int idAnimal;
@@ -20,7 +17,8 @@ public class Animal {
     public Animal() {
     }
 
-    public Animal(int idAnimal, Refugio refugio, String nombre, int edad, String especie, String estadoSalud, LocalDate fechaIngreso) {
+    public Animal(int idAnimal, Refugio refugio, String nombre, int edad, 
+            String especie, String estadoSalud, LocalDate fechaIngreso) {
         this.idAnimal = idAnimal;
         this.refugio = refugio;
         this.nombre = nombre;
