@@ -102,6 +102,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnRegistrarRefugio.setFocusable(false);
         btnRegistrarRefugio.setMaximumSize(new java.awt.Dimension(212, 40));
         btnRegistrarRefugio.setPreferredSize(new java.awt.Dimension(180, 40));
+        btnRegistrarRefugio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarRefugioActionPerformed(evt);
+            }
+        });
         pnlBtns.add(btnRegistrarRefugio);
         pnlBtns.add(filler2);
 
@@ -198,6 +203,13 @@ public class FrmPrincipal extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnRegistrarVoluntarioActionPerformed
+
+    private void btnRegistrarRefugioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarRefugioActionPerformed
+        pnlContenido.setLayout(new java.awt.BorderLayout());
+        
+        pnlContenido.add(new FrmRefugio(), java.awt.BorderLayout.CENTER);
+        pnlContenido.revalidate();
+    }//GEN-LAST:event_btnRegistrarRefugioActionPerformed
 
     /**
      * @param args the command line arguments
