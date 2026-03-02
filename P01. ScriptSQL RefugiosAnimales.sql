@@ -35,6 +35,7 @@ CREATE TABLE Animales (
   nombre varchar(30) not null,
   especie varchar(30) not null,
   fecha_nacimiento date not null,
+  estado_salud varchar(30) not null,
   fecha_ingreso date not null,
   id_refugio int not null,
   
