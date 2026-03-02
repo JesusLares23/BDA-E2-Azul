@@ -20,9 +20,10 @@ public class FrmRefugio extends javax.swing.JPanel {
      * Creates new form FrmRefugio
      */
     public FrmRefugio() {
+        initComponents();
         rfController = new RefugioController(new RefugioDAO());
 
-        initComponents();
+        
     }
 
     /**

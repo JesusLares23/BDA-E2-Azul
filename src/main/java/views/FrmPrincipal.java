@@ -81,7 +81,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.setLayout(new javax.swing.BoxLayout(pnlBtns, javax.swing.BoxLayout.Y_AXIS));
 
         btnRegistrarVoluntario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnRegistrarVoluntario.setText("Registrar Voluntario");
+        btnRegistrarVoluntario.setText("Voluntarios");
         btnRegistrarVoluntario.setBorder(null);
         btnRegistrarVoluntario.setBorderPainted(false);
         btnRegistrarVoluntario.setFocusable(false);
@@ -96,7 +96,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.add(filler1);
 
         btnRegistrarRefugio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnRegistrarRefugio.setText("Registrar Refugio");
+        btnRegistrarRefugio.setText("Refugios");
         btnRegistrarRefugio.setBorder(null);
         btnRegistrarRefugio.setBorderPainted(false);
         btnRegistrarRefugio.setFocusable(false);
@@ -111,7 +111,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.add(filler2);
 
         btnRegistrarAnimal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnRegistrarAnimal.setText("Registrar Animal");
+        btnRegistrarAnimal.setText("Animales");
         btnRegistrarAnimal.setBorder(null);
         btnRegistrarAnimal.setBorderPainted(false);
         btnRegistrarAnimal.setFocusable(false);
@@ -137,6 +137,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnSalir.setFocusable(false);
         btnSalir.setMaximumSize(new java.awt.Dimension(212, 40));
         btnSalir.setPreferredSize(new java.awt.Dimension(180, 40));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
         pnlBtns.add(btnSalir);
 
         javax.swing.GroupLayout pnlSidebarLayout = new javax.swing.GroupLayout(pnlSidebar);
@@ -194,22 +199,31 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void btnRegistrarVoluntarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVoluntarioActionPerformed
         // TODO add your handling code here:
         
-        
+        pnlContenido.removeAll();
         pnlContenido.setLayout(new java.awt.BorderLayout());
 
         pnlContenido.add(new FrmVoluntario(), java.awt.BorderLayout.CENTER);
 
         pnlContenido.revalidate();
+        pnlContenido.repaint();
         
         
     }//GEN-LAST:event_btnRegistrarVoluntarioActionPerformed
 
     private void btnRegistrarRefugioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarRefugioActionPerformed
+        pnlContenido.removeAll();
         pnlContenido.setLayout(new java.awt.BorderLayout());
+        
         
         pnlContenido.add(new FrmRefugio(), java.awt.BorderLayout.CENTER);
         pnlContenido.revalidate();
+        pnlContenido.repaint();
     }//GEN-LAST:event_btnRegistrarRefugioActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
