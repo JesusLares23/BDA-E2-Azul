@@ -6,7 +6,7 @@
 Voluntarios {
         id_voluntario : entero PK,
         nombre : texto(100),
-        edad : entero,
+        fecha_nacimiento : date,
         especialidad : texto(20),
         correo : texto(50),
         telefono : texto(20)
@@ -39,7 +39,7 @@ Animales {
         id_animal : entero PK,
         nombre : texto(30),
         especie : texto(30),
-        edad : entero,
+        fecha_nacimiento : date,
         estado_salud : texto(20),
         fecha_ingreso : fecha y hora,
         id_refugio : entero FK
@@ -59,4 +59,5 @@ id_refugio : entero FK
         que pertenece a Refugios
 
 }
+
 
