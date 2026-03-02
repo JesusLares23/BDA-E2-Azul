@@ -22,12 +22,12 @@ public class VoluntarioDAO implements IVoluntarioDAO{
 
     @Override
     public boolean insertar(Voluntario voluntario) {
-        String sql = "INSERT INTO voluntarios (nombre, edad, telefono, correo, id_especialidad) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO voluntarios (nombre, fecha_nacimiento, telefono, correo, id_especialidad) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, voluntario.getNombre());
-            ps.setInt(2, voluntario.getEdad());
+            ps.setDate(2, java.sql.Date.valueOf(voluntario.getFechaNacimiento()));
             ps.setString(3, voluntario.getTelefono());
             ps.setString(4, voluntario.getCorreo());
             ps.setInt(5, voluntario.getEspecialidad().getIdEspecialidad());
