@@ -13,7 +13,7 @@ public class AnimalDAO implements IAnimalDAO {
 
     @Override
     public boolean insertar(Animal animal) {
-        String query = "INSERT INTO Animal ("
+        //String query = "INSERT INTO Animal ("
     }
 
     @Override
