@@ -7,12 +7,23 @@ package interfaces;
 import config.ConexionDB;
 import dao.EspecialidadDAO;
 import dao.VoluntarioDAO;
+import java.util.List;
+import models.Tarea;
 
 /**
  *
  * @author demib
  */
 public interface ITareaDAO {
-    
-    
+
+    boolean insertar(Tarea tarea);
+
+    Tarea obtenerPorId(int idTarea);
+
+    List<Tarea> obtenerTodos();
+
+    boolean actualizar(Tarea tarea);
+
+    boolean eliminar(int idTarea);
+
 }
