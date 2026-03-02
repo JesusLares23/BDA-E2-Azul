@@ -13,6 +13,7 @@ public class AnimalDAO implements IAnimalDAO {
 
     @Override
     public boolean insertar(Animal animal) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
         //String query = "INSERT INTO Animal ("
     }
 
