@@ -11,19 +11,25 @@ import java.time.LocalDateTime;
  * @author demib
  */
 public class Tarea {
+
     private int idTarea;
-    private LocalDateTime fechaHoraTarea;
+    private LocalDateTime fecha;
     private String actividad;
+    private Voluntario voluntario;
+    private Animal animal;
+    private Refugio refugio;
 
     public Tarea() {
     }
-    
-    
 
-    public Tarea(int idTarea, LocalDateTime fechaHoraTarea, String actividad) {
+    public Tarea(int idTarea, LocalDateTime fecha, String actividad,
+            Voluntario voluntario, Animal animal, Refugio refugio) {
         this.idTarea = idTarea;
-        this.fechaHoraTarea = fechaHoraTarea;
+        this.fecha = fecha;
         this.actividad = actividad;
+        this.voluntario = voluntario;
+        this.animal = animal;
+        this.refugio = refugio;
     }
 
     public int getIdTarea() {
@@ -34,12 +40,12 @@ public class Tarea {
         this.idTarea = idTarea;
     }
 
-    public LocalDateTime getFechaHoraTarea() {
-        return fechaHoraTarea;
+    public LocalDateTime getFecha() {
+        return fecha;
     }
 
-    public void setFechaHoraTarea(LocalDateTime fechaHoraTarea) {
-        this.fechaHoraTarea = fechaHoraTarea;
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 
     public String getActividad() {
@@ -50,11 +56,40 @@ public class Tarea {
         this.actividad = actividad;
     }
 
+    public Voluntario getVoluntario() {
+        return voluntario;
+    }
+
+    public void setVoluntario(Voluntario voluntario) {
+        this.voluntario = voluntario;
+    }
+
+    public Animal getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(Animal animal) {
+        this.animal = animal;
+    }
+
+    public Refugio getRefugio() {
+        return refugio;
+    }
+
+    public void setRefugio(Refugio refugio) {
+        this.refugio = refugio;
+    }
+
     @Override
     public String toString() {
-        return "Tarea{" + "idTarea=" + idTarea + ", fechaHoraTarea=" + fechaHoraTarea + ", actividad=" + actividad + '}';
+        return "Tarea{"
+                + "idTarea=" + idTarea
+                + ", fecha=" + fecha
+                + ", actividad=" + actividad
+                + ", voluntario=" + voluntario
+                + ", animal=" + animal
+                + ", refugio=" + refugio
+                + '}';
     }
-    
-    
-    
+
 }
