@@ -80,9 +80,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.setBackground(new java.awt.Color(255, 255, 255));
         pnlBtns.setLayout(new javax.swing.BoxLayout(pnlBtns, javax.swing.BoxLayout.Y_AXIS));
 
-        btnRegistrarVoluntario.setBackground(new java.awt.Color(255, 255, 255));
         btnRegistrarVoluntario.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnRegistrarVoluntario.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarVoluntario.setText("Registrar Voluntario");
         btnRegistrarVoluntario.setBorder(null);
         btnRegistrarVoluntario.setBorderPainted(false);
@@ -97,9 +95,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.add(btnRegistrarVoluntario);
         pnlBtns.add(filler1);
 
-        btnRegistrarRefugio.setBackground(new java.awt.Color(255, 255, 255));
         btnRegistrarRefugio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnRegistrarRefugio.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarRefugio.setText("Registrar Refugio");
         btnRegistrarRefugio.setBorder(null);
         btnRegistrarRefugio.setBorderPainted(false);
@@ -109,9 +105,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.add(btnRegistrarRefugio);
         pnlBtns.add(filler2);
 
-        btnRegistrarAnimal.setBackground(new java.awt.Color(255, 255, 255));
         btnRegistrarAnimal.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnRegistrarAnimal.setForeground(new java.awt.Color(0, 0, 0));
         btnRegistrarAnimal.setText("Registrar Animal");
         btnRegistrarAnimal.setBorder(null);
         btnRegistrarAnimal.setBorderPainted(false);
@@ -121,9 +115,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.add(btnRegistrarAnimal);
         pnlBtns.add(filler3);
 
-        btnDocumentarTarea.setBackground(new java.awt.Color(255, 255, 255));
         btnDocumentarTarea.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnDocumentarTarea.setForeground(new java.awt.Color(0, 0, 0));
         btnDocumentarTarea.setText("Documentar Tarea");
         btnDocumentarTarea.setBorder(null);
         btnDocumentarTarea.setBorderPainted(false);
@@ -133,9 +125,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlBtns.add(btnDocumentarTarea);
         pnlBtns.add(filler5);
 
-        btnSalir.setBackground(new java.awt.Color(255, 255, 255));
         btnSalir.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        btnSalir.setForeground(new java.awt.Color(0, 0, 0));
         btnSalir.setText("Salir");
         btnSalir.setBorder(null);
         btnSalir.setBorderPainted(false);
