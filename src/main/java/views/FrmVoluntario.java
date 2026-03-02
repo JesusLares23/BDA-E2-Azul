@@ -8,6 +8,7 @@ import controllers.EspecialidadController;
 import controllers.VoluntarioController;
 import dao.EspecialidadDAO;
 import dao.VoluntarioDAO;
+import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
 import models.Especialidad;
@@ -44,11 +45,16 @@ public class FrmVoluntario extends javax.swing.JPanel {
         txtTelefono = new javax.swing.JTextField();
         lblCorreo = new javax.swing.JLabel();
         txtCorreo = new javax.swing.JTextField();
-        lblEdad = new javax.swing.JLabel();
-        txtEdad = new javax.swing.JTextField();
+        lblFechaNacimiento = new javax.swing.JLabel();
         lblEspecialidad = new javax.swing.JLabel();
         comboEspecialidad = new javax.swing.JComboBox<>();
         btnRegistrar = new javax.swing.JButton();
+        spinnerDia = new javax.swing.JSpinner();
+        lblDia = new javax.swing.JLabel();
+        spinnerMes = new javax.swing.JSpinner();
+        lblMes = new javax.swing.JLabel();
+        lblanio = new javax.swing.JLabel();
+        txtAnio = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(776, 776));
 
@@ -91,16 +97,8 @@ public class FrmVoluntario extends javax.swing.JPanel {
             }
         });
 
-        lblEdad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        lblEdad.setText("Edad:");
-
-        txtEdad.setBackground(new java.awt.Color(255, 255, 255));
-        txtEdad.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        txtEdad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEdadActionPerformed(evt);
-            }
-        });
+        lblFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblFechaNacimiento.setText("Fecha Nacimiento:");
 
         lblEspecialidad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblEspecialidad.setText("Especialidad:");
@@ -109,6 +107,27 @@ public class FrmVoluntario extends javax.swing.JPanel {
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
+            }
+        });
+
+        spinnerDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+
+        lblDia.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblDia.setText("Dia:");
+
+        spinnerMes.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+
+        lblMes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblMes.setText("Mes:");
+
+        lblanio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblanio.setText("Año:");
+
+        txtAnio.setBackground(new java.awt.Color(255, 255, 255));
+        txtAnio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txtAnio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAnioActionPerformed(evt);
             }
         });
 
@@ -121,7 +140,7 @@ public class FrmVoluntario extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblNombre)
@@ -132,33 +151,55 @@ public class FrmVoluntario extends javax.swing.JPanel {
                             .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblCorreo)
                             .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(lblEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtEdad))
-                            .addComponent(lblEspecialidad)
-                            .addComponent(comboEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(90, 90, 90))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblEspecialidad)
+                                    .addComponent(comboEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(90, 90, 90))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblFechaNacimiento)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblDia)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblMes)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spinnerMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblanio)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(lblRegistroVoluntario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblRelleneCampos)
-                .addGap(38, 38, 38)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblRegistroVoluntario)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblRelleneCampos)
+                        .addGap(55, 55, 55)
                         .addComponent(lblNombre)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblEdad)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(61, 61, 61)
+                        .addComponent(lblFechaNacimiento)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblDia)
+                            .addComponent(spinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblMes)
+                            .addComponent(spinnerMes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblanio)
+                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefono)
                     .addComponent(lblEspecialidad))
@@ -172,7 +213,7 @@ public class FrmVoluntario extends javax.swing.JPanel {
                 .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44)
                 .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(261, Short.MAX_VALUE))
+                .addContainerGap(253, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -188,28 +229,33 @@ public class FrmVoluntario extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCorreoActionPerformed
 
-    private void txtEdadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEdadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEdadActionPerformed
-
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         // TODO add your handling code here:
         registrarVoluntario();
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtAnioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAnioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAnioActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<Especialidad> comboEspecialidad;
     private javax.swing.JLabel lblCorreo;
-    private javax.swing.JLabel lblEdad;
+    private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblEspecialidad;
+    private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblMes;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRegistroVoluntario;
     private javax.swing.JLabel lblRelleneCampos;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblanio;
+    private javax.swing.JSpinner spinnerDia;
+    private javax.swing.JSpinner spinnerMes;
+    private javax.swing.JTextField txtAnio;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtEdad;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
@@ -232,7 +278,12 @@ public class FrmVoluntario extends javax.swing.JPanel {
         try {
             // 1. Tomar datos de los campos
             String nombre = txtNombre.getText().trim();
-            int edad = Integer.parseInt(txtEdad.getText().trim());
+            
+            int dia = (Integer) spinnerDia.getValue();
+            int mes = (Integer) spinnerMes.getValue();
+            int anio = Integer.parseInt(txtAnio.getText());
+            LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+            
             String telefono = txtTelefono.getText().trim();
             String correo = txtCorreo.getText().trim();
             Especialidad especialidad = (Especialidad) comboEspecialidad.getSelectedItem();
@@ -248,15 +299,15 @@ public class FrmVoluntario extends javax.swing.JPanel {
             }
             
             // 3. Mandar al controlador para guardar
-            boolean exito = vlController.agregarVoluntario(nombre, edad, telefono, correo, especialidad);
+            boolean exito = vlController.agregarVoluntario(nombre, fechaNacimiento, telefono, correo, especialidad);
 
             // 4. Verificar resultado
             if (exito) {
-                    JOptionPane.showMessageDialog(this, "Cliente guardado correctamente.");
+                    JOptionPane.showMessageDialog(this, "Voluntario guardado correctamente.");
                 } else {
                     JOptionPane.showMessageDialog(
                             this,
-                            "Ocurrio un error al guardar el cliente",
+                            "Ocurrio un error al guardar el voluntario",
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );

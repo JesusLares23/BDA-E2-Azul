@@ -5,6 +5,7 @@
 package controllers;
 
 import interfaces.IVoluntarioDAO;
+import java.time.LocalDate;
 import models.Especialidad;
 import models.Voluntario;
 
@@ -20,7 +21,7 @@ public class VoluntarioController {
     }
     
     // Insertar un nuevo cliente con validaciones
-    public boolean agregarVoluntario(String nombre,int edad, String telefono, String correo, Especialidad especialidad) {
+    public boolean agregarVoluntario(String nombre,LocalDate fechaNacimiento, String telefono, String correo, Especialidad especialidad) {
         if (nombre == null || nombre.trim().isEmpty()) {
             System.err.println("El nombre del cliente no puede estar vacío.");
             return false;
@@ -28,7 +29,7 @@ public class VoluntarioController {
 
         Voluntario voluntario = new Voluntario();
         voluntario.setNombre(nombre.trim());
-        voluntario.setEdad(edad);
+        voluntario.setFechaNacimiento(fechaNacimiento);
         voluntario.setTelefono(telefono.trim());
         voluntario.setCorreo(correo.trim());
         voluntario.setEspecialidad(especialidad);
