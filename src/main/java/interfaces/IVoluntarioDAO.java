@@ -15,6 +15,5 @@ public interface IVoluntarioDAO {
     boolean insertar(Voluntario voluntario);
     Voluntario obtenerPorId(int idVoluntario);
     List<Voluntario> obtenerTodos();
-    boolean actualizar(Voluntario voluntario);
     boolean eliminar(int idVoluntario);
 }
