@@ -10,24 +10,24 @@ public class Animal {
     private int idAnimal;
     private Refugio refugio;
     private String nombre;
-    private LocalDate fechaNacimiento;
     private String especie;
+    private LocalDate fechaNacimiento;
     private String estadoSalud;
     private LocalDate fechaIngreso;
 
     public Animal() {
     }
 
-    public Animal(int idAnimal, Refugio refugio, String nombre, 
-            LocalDate fechaNacimiento, String especie, String estadoSalud, 
-            LocalDate fechaIngreso) {
+    public Animal(int idAnimal, String nombre,  String estadoSalud, 
+            LocalDate fechaNacimiento, String especie, LocalDate fechaIngreso, 
+            Refugio refugio) {
         this.idAnimal = idAnimal;
-        this.refugio = refugio;
         this.nombre = nombre;
-        this.fechaNacimiento = fechaNacimiento;
         this.especie = especie;
         this.estadoSalud = estadoSalud;
+        this.fechaNacimiento = fechaNacimiento;
         this.fechaIngreso = fechaIngreso;
+        this.refugio = refugio;
     }
 
     public int getIdAnimal() {
@@ -37,18 +37,25 @@ public class Animal {
         this.idAnimal = idAnimal;
     }
 
-    public Refugio getRefugio() {
-        return refugio;
-    }
-    public void setRefugio(Refugio refugio) {
-        this.refugio = refugio;
-    }
-
     public String getNombre() {
         return nombre;
     }
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    
+    public String getEspecie() {
+        return especie;
+    }
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+    
+    public String getEstadoSalud() {
+        return estadoSalud;
+    }
+    public void setEstadoSalud(String estadoSalud) {
+        this.estadoSalud = estadoSalud;
     }
 
     public LocalDate getFechaNacimiento() {
@@ -66,21 +73,7 @@ public class Animal {
      * actual.
      */
     public int getEdad() {
-        return Period.between(fechaIngreso, LocalDate.now()).getYears();
-    }
-
-    public String getEspecie() {
-        return especie;
-    }
-    public void setEspecie(String especie) {
-        this.especie = especie;
-    }
-
-    public String getEstadoSalud() {
-        return estadoSalud;
-    }
-    public void setEstadoSalud(String estadoSalud) {
-        this.estadoSalud = estadoSalud;
+        return Period.between(fechaNacimiento, LocalDate.now()).getYears();
     }
 
     public LocalDate getFechaIngreso() {
@@ -89,7 +82,12 @@ public class Animal {
     public void setFechaIngreso(LocalDate fechaIngreso) {
         this.fechaIngreso = fechaIngreso;
     }
-    
-    
+
+    public Refugio getRefugio() {
+        return refugio;
+    }
+    public void setRefugio(Refugio refugio) {
+        this.refugio = refugio;
+    }    
     
 }

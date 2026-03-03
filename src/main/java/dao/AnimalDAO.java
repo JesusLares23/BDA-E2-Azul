@@ -1,9 +1,16 @@
 
 package dao;
 
+import config.ConexionDB;
 import interfaces.IAnimalDAO;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import models.Animal;
+import models.Refugio;
 
 /**
  *
@@ -13,13 +20,66 @@ public class AnimalDAO implements IAnimalDAO {
 
     @Override
     public boolean insertar(Animal animal) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-        //String query = "INSERT INTO Animal ("
+        String query = "INSERT INTO Animales ("
+                + "nombre, especie, estado_salud, fecha_nacimiento, "
+                + "fecha_ingreso, id_refugio) "
+                + "VALUES (?, ?, ?, ?, ?, ?)";
+        
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(query)
+                ){
+            
+            ps.setString(1, animal.getNombre());
+            ps.setString(2, animal.getEspecie());
+            ps.setString(3, animal.getEstadoSalud());
+            ps.setDate(4, Date.valueOf(animal.getFechaNacimiento()));
+            ps.setDate(5, Date.valueOf(animal.getFechaIngreso()));
+            ps.setInt(6, animal.getRefugio().getIdRefugio());
+            
+            return ps.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            System.out.println("Error al insertar animal: " + e.getMessage());
+            return false;
+        }
+
     }
 
     @Override
     public Animal obtenerPorId(int idAnimal) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "SELECT * FROM Animales WHERE idAnimal = ?";
+        Animal animal = null;
+        
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(query)
+                ){
+            
+            ps.setInt(1, idAnimal);
+            ResultSet rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                animal = new Animal();
+                animal.setIdAnimal(rs.getInt("id_animal"));
+                animal.setNombre(rs.getString("nombre"));
+                animal.setEspecie(rs.getString("especie"));
+                animal.setEstadoSalud(rs.getString("estado_salud"));
+                animal.setFechaNacimiento(
+                        rs.getDate("fecha_nacimiento").toLocalDate());
+                animal.setFechaIngreso(
+                        rs.getDate("fecha_ingreso").toLocalDate());
+                Refugio refugio = new Refugio();
+                refugio.setIdRefugio(rs.getInt("id_refugio"));
+                animal.setRefugio(refugio);
+                
+            }
+            
+        } catch (SQLException e) {
+            System.out.println("Error al obtener animal por ID: " 
+                    + e.getMessage());
+        }
+        return animal;
     }
 
     @Override
