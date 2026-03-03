@@ -21,7 +21,7 @@ public class AnimalDAO implements IAnimalDAO {
     @Override
     public boolean insertar(Animal animal) {
         String query = "INSERT INTO Animales ("
-                + "nombre, especie, fecha_nacimiento, estado_salud, "
+                + "nombre, especie, estado_salud, fecha_nacimiento, "
                 + "fecha_ingreso, id_refugio) "
                 + "VALUES (?, ?, ?, ?, ?, ?)";
         
@@ -32,8 +32,8 @@ public class AnimalDAO implements IAnimalDAO {
             
             ps.setString(1, animal.getNombre());
             ps.setString(2, animal.getEspecie());
-            ps.setDate(3, Date.valueOf(animal.getFechaNacimiento()));
-            ps.setString(4, animal.getEstadoSalud());
+            ps.setString(3, animal.getEstadoSalud());
+            ps.setDate(4, Date.valueOf(animal.getFechaNacimiento()));
             ps.setDate(5, Date.valueOf(animal.getFechaIngreso()));
             ps.setInt(6, animal.getRefugio().getIdRefugio());
             
@@ -64,9 +64,9 @@ public class AnimalDAO implements IAnimalDAO {
                 animal.setIdAnimal(rs.getInt("id_animal"));
                 animal.setNombre(rs.getString("nombre"));
                 animal.setEspecie(rs.getString("especie"));
+                animal.setEstadoSalud(rs.getString("estado_salud"));
                 animal.setFechaNacimiento(
                         rs.getDate("fecha_nacimiento").toLocalDate());
-                animal.setEstadoSalud(rs.getString("estado_salud"));
                 animal.setFechaIngreso(
                         rs.getDate("fecha_ingreso").toLocalDate());
                 Refugio refugio = new Refugio();
