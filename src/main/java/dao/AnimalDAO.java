@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import models.Animal;
 import models.Refugio;
@@ -84,7 +85,37 @@ public class AnimalDAO implements IAnimalDAO {
 
     @Override
     public List<Animal> obtenerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "SELECT * FROM Animales";
+        List<Animal> lista = new ArrayList<>();
+        
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()
+                ){
+            
+            while (rs.next()) {
+                Animal animal = new Animal();
+                animal = new Animal();
+                animal.setIdAnimal(rs.getInt("id_animal"));
+                animal.setNombre(rs.getString("nombre"));
+                animal.setEspecie(rs.getString("especie"));
+                animal.setEstadoSalud(rs.getString("estado_salud"));
+                animal.setFechaNacimiento(
+                        rs.getDate("fecha_nacimiento").toLocalDate());
+                animal.setFechaIngreso(
+                        rs.getDate("fecha_ingreso").toLocalDate());
+                Refugio refugio = new Refugio();
+                refugio.setIdRefugio(rs.getInt("id_refugio"));
+                animal.setRefugio(refugio);
+                lista.add(animal);
+            }
+                
+        } catch (SQLException e) {
+            System.out.println("Error al obtener todos los clientes: " 
+                    + e.getMessage());
+        }
+        return lista;
     }
 
     @Override
