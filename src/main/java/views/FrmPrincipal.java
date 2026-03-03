@@ -127,6 +127,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnDocumentarTarea.setFocusable(false);
         btnDocumentarTarea.setMaximumSize(new java.awt.Dimension(212, 40));
         btnDocumentarTarea.setPreferredSize(new java.awt.Dimension(180, 40));
+        btnDocumentarTarea.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDocumentarTareaActionPerformed(evt);
+            }
+        });
         pnlBtns.add(btnDocumentarTarea);
         pnlBtns.add(filler5);
 
@@ -224,6 +229,16 @@ public class FrmPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnDocumentarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentarTareaActionPerformed
+        pnlContenido.removeAll();
+        pnlContenido.setLayout(new java.awt.BorderLayout());
+        
+        
+        pnlContenido.add(new FrmTarea3(), java.awt.BorderLayout.CENTER);
+        pnlContenido.revalidate();
+        pnlContenido.repaint();
+    }//GEN-LAST:event_btnDocumentarTareaActionPerformed
 
     /**
      * @param args the command line arguments
