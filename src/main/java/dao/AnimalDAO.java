@@ -43,6 +43,7 @@ public class AnimalDAO implements IAnimalDAO {
             System.out.println("Error al insertar animal: " + e.getMessage());
             return false;
         }
+
     }
 
     @Override

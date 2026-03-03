@@ -4,6 +4,8 @@
  */
 package models;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author demib
@@ -11,20 +13,18 @@ package models;
 public class Voluntario {
     private int idVoluntario;
     private String nombre;
-    private int edad;
+    private LocalDate fechaNacimiento;
     private String telefono;
     private String correo;
     private Especialidad especialidad;
 
     public Voluntario() {
     }
-    
-    
 
-    public Voluntario(int idVoluntario, String nombre, int edad, String telefono, String correo, Especialidad especialidad) {
+    public Voluntario(int idVoluntario, String nombre, LocalDate fechaNacimiento, String telefono, String correo, Especialidad especialidad) {
         this.idVoluntario = idVoluntario;
         this.nombre = nombre;
-        this.edad = edad;
+        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.correo = correo;
         this.especialidad = especialidad;
@@ -46,12 +46,12 @@ public class Voluntario {
         this.nombre = nombre;
     }
 
-    public int getEdad() {
-        return edad;
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getTelefono() {
@@ -80,8 +80,12 @@ public class Voluntario {
 
     @Override
     public String toString() {
-        return "Voluntario{" + "idVoluntario=" + idVoluntario + ", nombre=" + nombre + ", edad=" + edad + ", telefono=" + telefono + ", correo=" + correo + ", especialidad=" + especialidad + '}';
+        return "Voluntario{" + "idVoluntario=" + idVoluntario + ", nombre=" + nombre + ", fechaNacimiento=" + fechaNacimiento + ", telefono=" + telefono + ", correo=" + correo + ", especialidad=" + especialidad + '}';
     }
+    
+    
+
+    
     
     
     

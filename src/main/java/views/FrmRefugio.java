@@ -4,17 +4,26 @@
  */
 package views;
 
+import controllers.RefugioController;
+import dao.RefugioDAO;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author demib
  */
 public class FrmRefugio extends javax.swing.JPanel {
 
+    private RefugioController rfController;
+
     /**
      * Creates new form FrmRefugio
      */
     public FrmRefugio() {
         initComponents();
+        rfController = new RefugioController(new RefugioDAO());
+
+        
     }
 
     /**
@@ -26,19 +35,319 @@ public class FrmRefugio extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblNumeroExterior = new javax.swing.JLabel();
+        txtNumeroExterior = new javax.swing.JTextField();
+        lblColonia = new javax.swing.JLabel();
+        txtColonia = new javax.swing.JTextField();
+        lblCalle = new javax.swing.JLabel();
+        txtCalle = new javax.swing.JTextField();
+        lblEstado = new javax.swing.JLabel();
+        txtEstado = new javax.swing.JTextField();
+        txtCiudad = new javax.swing.JTextField();
+        lblCiudad = new javax.swing.JLabel();
+        lblNombreResponsable = new javax.swing.JLabel();
+        txtNombreResponsable = new javax.swing.JTextField();
+        lblCapacidad = new javax.swing.JLabel();
+        txtCapacidad = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
+        lblDescripcion = new javax.swing.JLabel();
+        lblTitulo = new javax.swing.JLabel();
+        btnRegistrar = new javax.swing.JButton();
+
+        lblNumeroExterior.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblNumeroExterior.setText("Numero Exterior:");
+
+        txtNumeroExterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumeroExteriorActionPerformed(evt);
+            }
+        });
+
+        lblColonia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblColonia.setText("Colonia");
+
+        txtColonia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtColoniaActionPerformed(evt);
+            }
+        });
+
+        lblCalle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCalle.setText("Calle:");
+
+        txtCalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCalleActionPerformed(evt);
+            }
+        });
+
+        lblEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEstado.setText("Estado:");
+
+        txtEstado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEstadoActionPerformed(evt);
+            }
+        });
+
+        txtCiudad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCiudadActionPerformed(evt);
+            }
+        });
+
+        lblCiudad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCiudad.setText("Ciudad:");
+
+        lblNombreResponsable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblNombreResponsable.setText("Nombre de Responsable:");
+
+        txtNombreResponsable.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreResponsableActionPerformed(evt);
+            }
+        });
+
+        lblCapacidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCapacidad.setText("Capacidad:");
+
+        txtCapacidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCapacidadActionPerformed(evt);
+            }
+        });
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        lblNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblNombre.setText("Nombre: ");
+
+        lblDescripcion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblDescripcion.setText("Rellene todos los campos");
+
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblTitulo.setText("Menu de Refugio");
+
+        btnRegistrar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(58, 58, 58)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblCapacidad)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombre)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblDescripcion)
+                    .addComponent(lblTitulo)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblNombreResponsable)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                .addComponent(lblNumeroExterior, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNumeroExterior, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(lblCiudad)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtCiudad))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(lblColonia)
+                            .addGap(18, 18, 18)
+                            .addComponent(txtColonia))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblEstado)
+                                .addComponent(lblCalle))
+                            .addGap(18, 18, 18)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtCalle, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                                .addComponent(txtEstado)))))
+                .addContainerGap(437, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(lblTitulo)
+                .addGap(18, 18, 18)
+                .addComponent(lblDescripcion)
+                .addGap(37, 37, 37)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCapacidad)
+                    .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombreResponsable)
+                    .addComponent(txtNombreResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCiudad)
+                    .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEstado))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCalle)
+                    .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblColonia)
+                    .addComponent(txtColonia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNumeroExterior)
+                    .addComponent(txtNumeroExterior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(53, 53, 53)
+                .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(224, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtNumeroExteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroExteriorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNumeroExteriorActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        registrarRefugio();
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
+    private void txtCapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCapacidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCapacidadActionPerformed
+
+    private void txtNombreResponsableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreResponsableActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreResponsableActionPerformed
+
+    private void txtCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiudadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCiudadActionPerformed
+
+    private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEstadoActionPerformed
+
+    private void txtCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCalleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCalleActionPerformed
+
+    private void txtColoniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColoniaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtColoniaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnRegistrar;
+    private javax.swing.JLabel lblCalle;
+    private javax.swing.JLabel lblCapacidad;
+    private javax.swing.JLabel lblCiudad;
+    private javax.swing.JLabel lblColonia;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombreResponsable;
+    private javax.swing.JLabel lblNumeroExterior;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTextField txtCalle;
+    private javax.swing.JTextField txtCapacidad;
+    private javax.swing.JTextField txtCiudad;
+    private javax.swing.JTextField txtColonia;
+    private javax.swing.JTextField txtEstado;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtNombreResponsable;
+    private javax.swing.JTextField txtNumeroExterior;
     // End of variables declaration//GEN-END:variables
+
+    private void registrarRefugio() {
+
+        try {
+
+            //1. Toma de datos de los campos
+            String nombre = txtNombre.getText().trim();
+
+            String capacidadTexto = txtCapacidad.getText().trim();
+
+            String nombreResponsable = txtNombreResponsable.getText().trim();
+
+            String ciudad = txtCiudad.getText().trim();
+
+            String estado = txtEstado.getText().trim();
+
+            String calle = txtCalle.getText().trim();
+
+            String colonia = txtColonia.getText().trim();
+
+            String numeroExterior = txtNumeroExterior.getText().trim();
+
+            if (nombre.isEmpty() || capacidadTexto.isEmpty() || nombreResponsable.isEmpty() || ciudad.isEmpty()
+                    || estado.isEmpty() || calle.isEmpty() || colonia.isEmpty() || numeroExterior.isEmpty()) {
+
+                JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+
+            }
+
+            int capacidad;
+
+            try {
+                capacidad = Integer.parseInt(capacidadTexto);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this,
+                        "La capacidad debe ser un número válido", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            if (capacidad <= 0) {
+                JOptionPane.showMessageDialog(this,
+                        "La capacidad debe ser mayor que 0", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            
+            boolean exito= rfController.agregarRefugio(nombre, capacidad, nombreResponsable, ciudad, estado, calle, colonia, numeroExterior);
+            
+            if(exito){
+                JOptionPane.showMessageDialog(this, "Refugio registrado correctamente.");
+            }else{
+                JOptionPane.showMessageDialog(this, "Ocurrio un error al guardar el voluntario", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+          
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
 }

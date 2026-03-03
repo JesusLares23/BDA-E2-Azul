@@ -8,7 +8,9 @@ import config.ConexionDB;
 import interfaces.IVoluntarioDAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import models.Voluntario;
 
@@ -22,12 +24,12 @@ public class VoluntarioDAO implements IVoluntarioDAO{
 
     @Override
     public boolean insertar(Voluntario voluntario) {
-        String sql = "INSERT INTO voluntarios (nombre, edad, telefono, correo, id_especialidad) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO voluntarios (nombre, fecha_nacimiento, telefono, correo, id_especialidad) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = ConexionDB.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, voluntario.getNombre());
-            ps.setInt(2, voluntario.getEdad());
+            ps.setDate(2, java.sql.Date.valueOf(voluntario.getFechaNacimiento()));
             ps.setString(3, voluntario.getTelefono());
             ps.setString(4, voluntario.getCorreo());
             ps.setInt(5, voluntario.getEspecialidad().getIdEspecialidad());
@@ -42,22 +44,64 @@ public class VoluntarioDAO implements IVoluntarioDAO{
 
     @Override
     public Voluntario obtenerPorId(int idVoluntario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM voluntarios WHERE id_voluntario = ?";
+        Voluntario voluntario = null;
+
+        try (Connection conn = ConexionDB.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idVoluntario);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                voluntario = new Voluntario();
+                voluntario.setIdVoluntario(rs.getInt("id_voluntario"));
+                voluntario.setNombre(rs.getString("nombre"));
+                voluntario.setTelefono(rs.getString("direccion"));
+                voluntario.setCorreo(rs.getString("correo"));
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener cliente por ID: " + e.getMessage());
+        }
+        return voluntario;
     }
 
     @Override
     public List<Voluntario> obtenerTodos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM voluntarios";
+        List<Voluntario> lista = new ArrayList<>();
+
+        try (Connection conn = ConexionDB.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            while (rs.next()) {
+                Voluntario voluntario = new Voluntario();
+                voluntario.setIdVoluntario(rs.getInt("id_voluntario"));
+                voluntario.setNombre(rs.getString("nombre"));
+                voluntario.setTelefono(rs.getString("telefono"));
+                voluntario.setCorreo(rs.getString("correo"));
+                lista.add(voluntario);
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error al obtener todos los voluntarios: " + e.getMessage());
+        }
+        return lista;
     }
 
-    @Override
-    public boolean actualizar(Voluntario voluntario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
     @Override
     public boolean eliminar(int idVoluntario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM voluntarios WHERE id_voluntario = ?";
+        try (Connection conn = ConexionDB.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setInt(1, idVoluntario);
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar voluntario: " + e.getMessage());
+            return false;
+        }
     }
     
 }
