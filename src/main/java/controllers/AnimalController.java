@@ -16,10 +16,14 @@ public class AnimalController {
         this.animalDAO = new AnimalDAO();
     }
     
-//    public boolean agregarAnimal(String nombre, String especie, 
-//            String fechaNacimiento, String estado_salud, String fechaIngreso, 
-//            String idRefugio) {
-//        
-//    }
+    public boolean agregarAnimal(String nombre, String especie, 
+            String estadoSalud, String fechaNacimiento, String fechaIngreso, 
+            String idRefugio) {
+        if (nombre == null || nombre.trim().isEmpty()) {
+            System.out.println("El nombre del animal no puede estar vacio.");
+            return false;
+        }
+        return true;
+    }
     
 }
