@@ -143,7 +143,19 @@ public class AnimalDAO implements IAnimalDAO {
     
     @Override
     public boolean eliminar(int idAnimal) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "DELETE FROM Animales WHERE id_animal = ?";
+        
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(query);
+                ){
+            ps.setInt(1, idAnimal);
+            return ps.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            System.out.println("Error al eliminal animal: " + e.getMessage());
+            return false;
+        }
     }
     
 }
