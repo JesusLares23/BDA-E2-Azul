@@ -23,6 +23,7 @@ public class AnimalController {
             System.out.println("El nombre del animal no puede estar vacio.");
             return false;
         }
+        
         return true;
     }
     

@@ -8,12 +8,12 @@ import java.time.Period;
  */
 public class Animal {
     private int idAnimal;
-    private Refugio refugio;
     private String nombre;
     private String especie;
     private LocalDate fechaNacimiento;
     private String estadoSalud;
     private LocalDate fechaIngreso;
+    private Refugio refugio;
 
     public Animal() {
     }
