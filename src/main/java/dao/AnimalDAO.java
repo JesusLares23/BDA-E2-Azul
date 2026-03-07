@@ -35,7 +35,7 @@ public class AnimalDAO implements IAnimalDAO {
             ps.setString(3, animal.getEstadoSalud());
             ps.setDate(4, Date.valueOf(animal.getFechaNacimiento()));
             ps.setDate(5, Date.valueOf(animal.getFechaIngreso()));
-            ps.setInt(6, animal.getRefugio().getIdRefugio());
+            ps.setInt(6, animal.getIdRefugio());
             
             return ps.executeUpdate() > 0;
             
@@ -71,7 +71,7 @@ public class AnimalDAO implements IAnimalDAO {
                         rs.getDate("fecha_ingreso").toLocalDate());
                 Refugio refugio = new Refugio();
                 refugio.setIdRefugio(rs.getInt("id_refugio"));
-                animal.setRefugio(refugio);
+                animal.setIdRefugio(rs.getInt("id_refugio"));
                 
             }
             
@@ -106,7 +106,7 @@ public class AnimalDAO implements IAnimalDAO {
                         rs.getDate("fecha_ingreso").toLocalDate());
                 Refugio refugio = new Refugio();
                 refugio.setIdRefugio(rs.getInt("id_refugio"));
-                animal.setRefugio(refugio);
+                animal.setIdRefugio(rs.getInt("id_refugio"));
                 lista.add(animal);
             }
             
@@ -131,7 +131,7 @@ public class AnimalDAO implements IAnimalDAO {
             ps.setString(3, animal.getEstadoSalud());
             ps.setDate(4, Date.valueOf(animal.getFechaNacimiento()));
             ps.setDate(5, Date.valueOf(animal.getFechaIngreso()));
-            ps.setInt(6, animal.getRefugio().getIdRefugio());
+            ps.setInt(6, animal.getIdRefugio());
             
             return ps.executeUpdate() > 0;
             
@@ -143,7 +143,19 @@ public class AnimalDAO implements IAnimalDAO {
     
     @Override
     public boolean eliminar(int idAnimal) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String query = "DELETE FROM Animales WHERE id_animal = ?";
+        
+        try (
+                Connection con = ConexionDB.getConnection();
+                PreparedStatement ps = con.prepareStatement(query);
+                ){
+            ps.setInt(1, idAnimal);
+            return ps.executeUpdate() > 0;
+            
+        } catch (SQLException e) {
+            System.out.println("Error al eliminal animal: " + e.getMessage());
+            return false;
+        }
     }
     
 }
