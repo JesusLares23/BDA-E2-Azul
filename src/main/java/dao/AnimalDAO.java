@@ -35,7 +35,7 @@ public class AnimalDAO implements IAnimalDAO {
             ps.setString(3, animal.getEstadoSalud());
             ps.setDate(4, Date.valueOf(animal.getFechaNacimiento()));
             ps.setDate(5, Date.valueOf(animal.getFechaIngreso()));
-            ps.setInt(6, animal.getRefugio().getIdRefugio());
+            ps.setInt(6, animal.getIdRefugio());
             
             return ps.executeUpdate() > 0;
             
@@ -71,7 +71,7 @@ public class AnimalDAO implements IAnimalDAO {
                         rs.getDate("fecha_ingreso").toLocalDate());
                 Refugio refugio = new Refugio();
                 refugio.setIdRefugio(rs.getInt("id_refugio"));
-                animal.setRefugio(refugio);
+                animal.setIdRefugio(rs.getInt("id_refugio"));
                 
             }
             
@@ -106,7 +106,7 @@ public class AnimalDAO implements IAnimalDAO {
                         rs.getDate("fecha_ingreso").toLocalDate());
                 Refugio refugio = new Refugio();
                 refugio.setIdRefugio(rs.getInt("id_refugio"));
-                animal.setRefugio(refugio);
+                animal.setIdRefugio(rs.getInt("id_refugio"));
                 lista.add(animal);
             }
             
@@ -131,7 +131,7 @@ public class AnimalDAO implements IAnimalDAO {
             ps.setString(3, animal.getEstadoSalud());
             ps.setDate(4, Date.valueOf(animal.getFechaNacimiento()));
             ps.setDate(5, Date.valueOf(animal.getFechaIngreso()));
-            ps.setInt(6, animal.getRefugio().getIdRefugio());
+            ps.setInt(6, animal.getIdRefugio());
             
             return ps.executeUpdate() > 0;
             
