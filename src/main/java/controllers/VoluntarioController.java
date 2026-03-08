@@ -58,7 +58,7 @@ public class VoluntarioController {
         return voluntarioDAO.insertar(voluntario);
     }
     
-    // Obtener un cliente por ID
+    // Obtener un voluntario por ID
     public Voluntario obtenerVoluntario(int idVoluntario) {
         if (idVoluntario <= 0) {
             System.err.println("ID de Voluntario inválido.");
@@ -66,6 +66,10 @@ public class VoluntarioController {
         }
         return voluntarioDAO.obtenerPorId(idVoluntario);
     }
+    
+    
+    
+    
 
     // Obtener todos los clientes
     public List<Voluntario> listarVoluntarios() {
@@ -82,6 +86,7 @@ public class VoluntarioController {
         return modelo;
     }
     
+    
     public boolean eliminarVoluntario(int idVoluntario){
         if (idVoluntario <= 0) {
             System.err.println("ID de Voluntario inválido.");
@@ -89,4 +94,48 @@ public class VoluntarioController {
         }
         return voluntarioDAO.eliminar(idVoluntario);
     }
+    
+    // Actualizar cliente con validaciones
+    public boolean actualizarVoluntario(int idVoluntario, String nombre, LocalDate fechaNacimiento, String telefono, String correo, Especialidad especialidad ) {
+        if (idVoluntario <= 0) {
+            System.err.println("ID de voluntario inválido.");
+            return false;
+        }
+        if (nombre == null || nombre.trim().isEmpty()) {
+            System.err.println("El nombre del voluntario no puede estar vacío.");
+            return false;
+        }
+        
+        if (fechaNacimiento == null) {
+            System.err.println("La fecha del voluntario no puede estar vacío.");
+            return false;
+        }
+        
+        if (telefono == null || telefono.trim().isEmpty()) {
+            System.err.println("El nombre del voluntario no puede estar vacío.");
+            return false;
+        }
+        
+        if (correo == null || correo.trim().isEmpty()) {
+            System.err.println("El correo del voluntario no puede estar vacío.");
+            return false;
+        }
+        
+        if (especialidad == null) {
+            System.err.println("Lae especialidad del voluntario no puede estar vacío.");
+            return false;
+        }
+
+        Voluntario voluntario = new Voluntario();
+        voluntario.setIdVoluntario(idVoluntario);
+        voluntario.setNombre(nombre.trim());
+        voluntario.setFechaNacimiento(fechaNacimiento);
+        voluntario.setTelefono(telefono.trim());
+        voluntario.setCorreo(correo.trim());
+        voluntario.setEspecialidad(especialidad);
+
+        return voluntarioDAO.actualizar(voluntario);
+    }
+    
+    
 }

@@ -9,11 +9,19 @@ import controllers.VoluntarioController;
 import dao.EspecialidadDAO;
 import dao.VoluntarioDAO;
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.UIManager;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableRowSorter;
+import javax.swing.text.StyleConstants;
 import models.Especialidad;
 
 /**
@@ -27,9 +35,23 @@ public class FrmVoluntario extends javax.swing.JPanel {
      */
     public FrmVoluntario() {
         initComponents();
+        inicializarFormulario();
         vlController = new VoluntarioController(new VoluntarioDAO());
         cargarVoluntarios();
         cargarEspecialidades();
+        
+        
+    }
+    
+    private void inicializarFormulario(){
+        ocultarErrores();
+    }
+    
+    private void ocultarErrores(){
+        lblNombreObligatorio.setVisible(false);
+        lblTelefonoObligatorio.setVisible(false);
+        lblCorreoObligatorio.setVisible(false);
+        lblAnioObligatorio.setVisible(false);
     }
 
     /**
@@ -64,17 +86,34 @@ public class FrmVoluntario extends javax.swing.JPanel {
         lblId = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
         btnBorrar = new javax.swing.JButton();
+        txtBarraBusqueda = new javax.swing.JTextField();
+        lblNombreObligatorio = new javax.swing.JLabel();
+        lblTelefonoObligatorio = new javax.swing.JLabel();
+        lblCorreoObligatorio = new javax.swing.JLabel();
+        lblAnioObligatorio = new javax.swing.JLabel();
+        lblRelleneCampos1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        btnActualizar = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(776, 776));
 
         lblRegistroVoluntario.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblRegistroVoluntario.setForeground(new java.awt.Color(0, 0, 0));
         lblRegistroVoluntario.setText("Registro de Voluntario");
 
-        lblNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(0, 0, 0));
         lblNombre.setText("Nombre:");
 
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
-        txtNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        txtNombre.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtNombreFocusLost(evt);
+            }
+        });
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
@@ -82,58 +121,98 @@ public class FrmVoluntario extends javax.swing.JPanel {
         });
 
         lblRelleneCampos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblRelleneCampos.setForeground(new java.awt.Color(0, 0, 0));
         lblRelleneCampos.setText("Rellene todos los campos.");
 
-        lblTelefono.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblTelefono.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(0, 0, 0));
         lblTelefono.setText("Numero de Telefono ( 10 digitos ):");
 
         txtTelefono.setBackground(new java.awt.Color(255, 255, 255));
-        txtTelefono.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txtTelefono.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtTelefono.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        txtTelefono.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtTelefonoFocusLost(evt);
+            }
+        });
         txtTelefono.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTelefonoActionPerformed(evt);
             }
         });
 
-        lblCorreo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblCorreo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblCorreo.setForeground(new java.awt.Color(0, 0, 0));
         lblCorreo.setText("Correo electronico:");
 
         txtCorreo.setBackground(new java.awt.Color(255, 255, 255));
-        txtCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txtCorreo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        txtCorreo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtCorreoFocusLost(evt);
+            }
+        });
         txtCorreo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCorreoActionPerformed(evt);
             }
         });
 
-        lblFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFechaNacimiento.setForeground(new java.awt.Color(0, 0, 0));
         lblFechaNacimiento.setText("Fecha Nacimiento:");
 
-        lblEspecialidad.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblEspecialidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblEspecialidad.setForeground(new java.awt.Color(0, 0, 0));
         lblEspecialidad.setText("Especialidad:");
 
+        comboEspecialidad.setBackground(new java.awt.Color(255, 255, 255));
+        comboEspecialidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboEspecialidadActionPerformed(evt);
+            }
+        });
+
+        btnRegistrar.setBackground(new java.awt.Color(0, 102, 204));
+        btnRegistrar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
         btnRegistrar.setText("REGISTRAR");
+        btnRegistrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 204), 1, true));
+        btnRegistrar.setBorderPainted(false);
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistrarActionPerformed(evt);
             }
         });
 
+        spinnerDia.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spinnerDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
 
-        lblDia.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblDia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblDia.setForeground(new java.awt.Color(0, 0, 0));
         lblDia.setText("Dia:");
 
+        spinnerMes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         spinnerMes.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
 
-        lblMes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblMes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblMes.setForeground(new java.awt.Color(0, 0, 0));
         lblMes.setText("Mes:");
 
-        lblanio.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblanio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblanio.setForeground(new java.awt.Color(0, 0, 0));
         lblanio.setText("Año:");
 
         txtAnio.setBackground(new java.awt.Color(255, 255, 255));
-        txtAnio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txtAnio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAnio.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        txtAnio.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                txtAnioFocusLost(evt);
+            }
+        });
         txtAnio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAnioActionPerformed(evt);
@@ -158,24 +237,82 @@ public class FrmVoluntario extends javax.swing.JPanel {
         });
         scrlPaneVoluntarios.setViewportView(tblVoluntarios);
 
-        lblId.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lblId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblId.setForeground(new java.awt.Color(0, 0, 0));
         lblId.setText("Id:");
 
         txtId.setEditable(false);
         txtId.setBackground(new java.awt.Color(255, 255, 255));
         txtId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtId.setText("00");
-        txtId.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        txtId.setText(" 00");
+        txtId.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         txtId.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtIdActionPerformed(evt);
             }
         });
 
+        btnBorrar.setBackground(new java.awt.Color(0, 102, 204));
+        btnBorrar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnBorrar.setForeground(new java.awt.Color(255, 255, 255));
         btnBorrar.setText("ELIMINAR");
+        btnBorrar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 204), 2, true));
+        btnBorrar.setBorderPainted(false);
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBorrarActionPerformed(evt);
+            }
+        });
+
+        txtBarraBusqueda.setBackground(new java.awt.Color(255, 255, 255));
+        txtBarraBusqueda.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtBarraBusqueda.setToolTipText("");
+        txtBarraBusqueda.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        txtBarraBusqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBarraBusquedaActionPerformed(evt);
+            }
+        });
+        txtBarraBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBarraBusquedaKeyReleased(evt);
+            }
+        });
+
+        lblNombreObligatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblNombreObligatorio.setForeground(new java.awt.Color(255, 102, 102));
+        lblNombreObligatorio.setText("Campo obligatorio");
+
+        lblTelefonoObligatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblTelefonoObligatorio.setForeground(new java.awt.Color(255, 102, 102));
+        lblTelefonoObligatorio.setText("Campo obligatorio");
+
+        lblCorreoObligatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblCorreoObligatorio.setForeground(new java.awt.Color(255, 102, 102));
+        lblCorreoObligatorio.setText("Campo obligatorio");
+
+        lblAnioObligatorio.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        lblAnioObligatorio.setForeground(new java.awt.Color(255, 102, 102));
+        lblAnioObligatorio.setText("Campo obligatorio");
+
+        lblRelleneCampos1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblRelleneCampos1.setForeground(new java.awt.Color(0, 0, 0));
+        lblRelleneCampos1.setText("TABLA DE CLIENTES");
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel1.setText("Busca por : Nombre, Telefono o Correo");
+
+        btnActualizar.setBackground(new java.awt.Color(0, 102, 204));
+        btnActualizar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnActualizar.setForeground(new java.awt.Color(255, 255, 255));
+        btnActualizar.setText("ACTUALIZAR");
+        btnActualizar.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 204), 2, true));
+        btnActualizar.setBorderPainted(false);
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -184,52 +321,71 @@ public class FrmVoluntario extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRelleneCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblTelefono)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCorreo)
-                    .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRegistroVoluntario)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblId)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                        .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING))
-                    .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblFechaNacimiento)
+                        .addGap(3, 3, 3)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblDia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblEspecialidad)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblMes)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spinnerMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblanio)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())
+                                .addComponent(comboEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(lblRelleneCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRegistroVoluntario)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblId)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
+                                    .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblNombreObligatorio))
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblTelefono)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblTelefonoObligatorio))
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCorreo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblCorreoObligatorio))
+                            .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(lblFechaNacimiento)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblAnioObligatorio))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDia)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblMes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spinnerMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(lblanio)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 270, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblEspecialidad)
-                                    .addComponent(comboEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(84, 84, 84))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(scrlPaneVoluntarios, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36))))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(scrlPaneVoluntarios, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                                .addComponent(txtBarraBusqueda)))
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lblRelleneCampos1)
+                        .addGap(115, 115, 115))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,48 +399,60 @@ public class FrmVoluntario extends javax.swing.JPanel {
                     .addComponent(lblId)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre)
+                    .addComponent(lblNombreObligatorio)
+                    .addComponent(lblRelleneCampos1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblFechaNacimiento)
+                        .addComponent(scrlPaneVoluntarios, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBarraBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblTelefono)
+                            .addComponent(lblTelefonoObligatorio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCorreo)
+                            .addComponent(lblCorreoObligatorio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(comboEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEspecialidad))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblFechaNacimiento)
+                            .addComponent(lblAnioObligatorio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblDia)
                             .addComponent(spinnerDia, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblMes)
                             .addComponent(spinnerMes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblanio)
-                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTelefono)
-                    .addComponent(lblEspecialidad))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(lblCorreo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(scrlPaneVoluntarios, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(99, Short.MAX_VALUE))
+                            .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(242, 242, 242))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtTelefonoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTelefonoActionPerformed
@@ -318,33 +486,83 @@ public class FrmVoluntario extends javax.swing.JPanel {
         eliminar();
     }//GEN-LAST:event_btnBorrarActionPerformed
 
+    private void comboEspecialidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboEspecialidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboEspecialidadActionPerformed
+
+    private void txtBarraBusquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBarraBusquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBarraBusquedaActionPerformed
+
+    private void txtNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtNombreFocusLost
+        // TODO add your handling code here:
+        validarTxtNombreObligatorio();
+    }//GEN-LAST:event_txtNombreFocusLost
+
+    private void txtTelefonoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtTelefonoFocusLost
+        // TODO add your handling code here:
+        validarTxtTelefonoObligatorio();
+    }//GEN-LAST:event_txtTelefonoFocusLost
+
+    private void txtCorreoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtCorreoFocusLost
+        // TODO add your handling code here:
+        validarTxtCorreoObligatorio();
+    }//GEN-LAST:event_txtCorreoFocusLost
+
+    private void txtAnioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtAnioFocusLost
+        // TODO add your handling code here:
+        validarTxtAnioObligatorio();
+    }//GEN-LAST:event_txtAnioFocusLost
+
+    private void txtBarraBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBarraBusquedaKeyReleased
+        // TODO add your handling code here:
+        String texto = txtBarraBusqueda.getText();
+        filtrarTabla(texto);
+    }//GEN-LAST:event_txtBarraBusquedaKeyReleased
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        // TODO add your handling code here:
+        actualizar();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JComboBox<Especialidad> comboEspecialidad;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lblAnioObligatorio;
     private javax.swing.JLabel lblCorreo;
+    private javax.swing.JLabel lblCorreoObligatorio;
     private javax.swing.JLabel lblDia;
     private javax.swing.JLabel lblEspecialidad;
     private javax.swing.JLabel lblFechaNacimiento;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblMes;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblNombreObligatorio;
     private javax.swing.JLabel lblRegistroVoluntario;
     private javax.swing.JLabel lblRelleneCampos;
+    private javax.swing.JLabel lblRelleneCampos1;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblTelefonoObligatorio;
     private javax.swing.JLabel lblanio;
     private javax.swing.JScrollPane scrlPaneVoluntarios;
     private javax.swing.JSpinner spinnerDia;
     private javax.swing.JSpinner spinnerMes;
     private javax.swing.JTable tblVoluntarios;
     private javax.swing.JTextField txtAnio;
+    private javax.swing.JTextField txtBarraBusqueda;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 
+    
+    
     private void cargarVoluntarios() {
         tblVoluntarios.setModel(vlController.obtenerTablaVoluntarios());
     }
@@ -363,7 +581,7 @@ public class FrmVoluntario extends javax.swing.JPanel {
     }
     
     private void limpiarCampos() {
-        txtId.setText("0");
+        txtId.setText("00");
         txtNombre.setText("");
         txtCorreo.setText("");
         txtTelefono.setText("");
@@ -388,153 +606,230 @@ public class FrmVoluntario extends javax.swing.JPanel {
         }
     }
     
-    private void registrarVoluntario() {
-        txtNombre.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        txtAnio.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        txtTelefono.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        txtCorreo.setBorder(BorderFactory.createLineBorder(Color.BLACK,2));
-        try {
-            // 1. Tomar datos de los campos
+    public boolean validarTxtNombreObligatorio(){
             String nombre = txtNombre.getText().trim();
             
-            int dia = (Integer) spinnerDia.getValue();
-            int mes = (Integer) spinnerMes.getValue();
             
+            
+            if (nombre.isEmpty()) {
+                lblNombreObligatorio.setText("Campo obligatorio");
+                lblNombreObligatorio.setVisible(true);
+                txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                return false;
+            }else{
+                txtNombre.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblNombreObligatorio.setVisible(false);
+            }
+            
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{2,}")) {
+                
+                lblNombreObligatorio.setText("Nombre no valido");
+                lblNombreObligatorio.setVisible(true);
+                txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED,1));
 
+                return false;
+            }else{
+                txtNombre.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblNombreObligatorio.setVisible(false);
+            }
+            
+            return true;
+            
+    }
+    
+    public boolean validarTxtTelefonoObligatorio(){
+        
             String telefono = txtTelefono.getText().trim();
-            String correo = txtCorreo.getText().trim();
-            Especialidad especialidad = (Especialidad) comboEspecialidad.getSelectedItem();
-            
-            
-            String anioValidacion = txtAnio.getText();
-            
-            //Validacion de Campos Obligatorios
 
-            if (nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty() || anioValidacion.isEmpty()) {
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Todos los campos son obligatorios.",
-                        "Error",
-                        JOptionPane.WARNING_MESSAGE
-                );
-                
-                if(nombre.isEmpty()){
-                    txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                }
-                
-                if(telefono.isEmpty()){
-                    txtTelefono.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                }
-                
-                if(correo.isEmpty()){
-                    txtCorreo.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                }
-                
-                if(anioValidacion.isEmpty()){
-                    txtAnio.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                }
-                
-                return;
+            
+            if (telefono.isEmpty()) {
+                lblTelefonoObligatorio.setText("Campo Obligatorio");
+                lblTelefonoObligatorio.setVisible(true);
+                txtTelefono.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                return false;
+            }else{
+                txtTelefono.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblTelefonoObligatorio.setVisible(false);
             }
-            
-            // VALIDACIONES DE CAMPO: NOMBRE
-            
-
-            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "El nombre solo debe contener letras.",
-                    "Error",
-                    JOptionPane.WARNING_MESSAGE
-                );
-                txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                txtNombre.requestFocus();
-                return;
-            }
-            
-            
-            
-            // VALIDACIONES DE CAMPO: FECHA
-            
-            int anio = Integer.parseInt(txtAnio.getText());
-            LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
-            
-            if(anio > 2008){
-                
-                JOptionPane.showMessageDialog(
-                        this,
-                        "Tiene que ser mayor de 18 años",
-                        "Error",
-                        JOptionPane.WARNING_MESSAGE
-                );
-                txtAnio.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                return;
-            }
-            
-            if(anio < 1960){
-                JOptionPane.showMessageDialog(
-                        this,
-                        "El año no es valido, asegurate de poner la fecha real.",
-                        "Error",
-                        JOptionPane.WARNING_MESSAGE
-                );
-                txtAnio.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                return;
-            }
-            
-            // VALIDACION DE CAMPO: TELEFONO
             
             if (!telefono.matches("\\d{10}")) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "El teléfono debe contener exactamente 10 dígitos numéricos.",
-                    "Error",
-                    JOptionPane.WARNING_MESSAGE
-                );
-                txtTelefono.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                txtTelefono.requestFocus();
-                return;
+                lblTelefonoObligatorio.setText("Numero no valido.");
+                lblTelefonoObligatorio.setVisible(true);
+                txtTelefono.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                
+                return false;
+            }else{
+                txtTelefono.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblTelefonoObligatorio.setVisible(false);
             }
             
-            
-            // VALIDACION DE CAMPO: CORREO
+            return true;    
+    }
+    
 
+    
+    public boolean validarTxtCorreoObligatorio(){
+
+            String correo = txtCorreo.getText().trim();
+
+            if (correo.isEmpty()) {
+                lblCorreoObligatorio.setText("Campo Obligatorio");
+                lblCorreoObligatorio.setVisible(true);
+                txtCorreo.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                return false;
+            }else{
+                txtCorreo.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblCorreoObligatorio.setVisible(false);
+            }
+            
             if (!correo.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Ingrese un correo válido.",
-                    "Error",
-                    JOptionPane.WARNING_MESSAGE
-                );
-                txtCorreo.setBorder(BorderFactory.createLineBorder(Color.RED,2));
-                txtCorreo.requestFocus();
-                return;
+                lblCorreoObligatorio.setText("Ingrese un correo valido");
+                lblCorreoObligatorio.setVisible(true);
+                txtCorreo.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                return false;
+            }else{
+                txtCorreo.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblCorreoObligatorio.setVisible(false);
+            }
+            return true;
+            
+    }
+    
+    public boolean validarTxtAnioObligatorio(){
+        
+            String anioValidacion = txtAnio.getText();
+            //Valida si el campo esta vacio
+            if (anioValidacion.isEmpty()) {
+                lblAnioObligatorio.setText("Campo Obligatorio");
+                lblAnioObligatorio.setVisible(true);
+                txtAnio.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                
+                return false;
+            }else{
+                txtAnio.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblAnioObligatorio.setVisible(false);
             }
             
-            // 3. Mandar al controlador para guardar
-            boolean exito = vlController.agregarVoluntario(nombre, fechaNacimiento, telefono, correo, especialidad);
+            
+            
+            
+            //Valida que sean exactamente 4 digitos
+            if (!anioValidacion.matches("\\d{4}")) {
+                lblAnioObligatorio.setText("El año no es valido");
+                txtAnio.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                lblAnioObligatorio.setVisible(true);
+                return false;
+            }else{
+                txtAnio.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                lblAnioObligatorio.setVisible(false);
+            }
+            
+            try{
+                int anio = Integer.parseInt(txtAnio.getText());
+                int dia = (Integer) spinnerDia.getValue();
+                int mes = (Integer) spinnerMes.getValue();
+                LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+                //VERIFICAR QUE SEA MAYOR DE 18
+                if(anio > 2008){
 
-            // 4. Verificar resultado
-            if (exito) {
-                    JOptionPane.showMessageDialog(this, "Voluntario guardado correctamente.");
-                } else {
-                    JOptionPane.showMessageDialog(
+                    lblAnioObligatorio.setText("Tiene que ser mayor de 18");
+                    txtAnio.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                    lblAnioObligatorio.setVisible(true);
+                    return false;
+                }else{
+                    txtAnio.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                    lblAnioObligatorio.setVisible(false);
+                }
+            
+            //VERIFICAR QUE SEA UNA FECHA REALISTA
+                if(anio < 1960){
+                    lblAnioObligatorio.setText("El año no es valido.");
+                    txtAnio.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                    lblAnioObligatorio.setVisible(true);
+                    return false;
+                }else{
+                    txtAnio.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+                    lblAnioObligatorio.setVisible(false);
+                }
+            }catch(Exception e){
+                lblAnioObligatorio.setText("El año no es valido.");
+                return false;
+            }
+            
+            return true;
+            
+            
+            
+            
+    }
+    
+    public boolean validarFormulario(){
+        boolean nombre = validarTxtNombreObligatorio();
+        boolean tel = validarTxtTelefonoObligatorio();
+        boolean correo = validarTxtCorreoObligatorio();
+        boolean anio = validarTxtAnioObligatorio();
+        
+        //Verificar si un campo es falso
+        //En caso de que haya al menos uno falso retorna false y en caso de que ninguno lo sea retorna true
+        if(!nombre || !tel || !correo || !anio){
+            return false;
+        }
+        return true;
+    }
+    
+    private void registrarVoluntario() {
+        
+        try {
+
+            if(!validarFormulario()){
+                JOptionPane.showMessageDialog(
                             this,
-                            "Ocurrio un error al guardar el voluntario",
+                            "No se pudo registrar. Verifique los campos.",
                             "Error",
                             JOptionPane.ERROR_MESSAGE
                     );
+                return;
+            }else{
+                // 1. Tomar datos de los campos
+                String nombre = txtNombre.getText().trim();
+
+                int dia = (Integer) spinnerDia.getValue();
+                int mes = (Integer) spinnerMes.getValue();
+                int anio = Integer.parseInt(txtAnio.getText());
+                LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+
+
+                String telefono = txtTelefono.getText().trim();
+                String correo = txtCorreo.getText().trim();
+                Especialidad especialidad = (Especialidad) comboEspecialidad.getSelectedItem();
+
+
+                //String anioValidacion = txtAnio.getText();
+                
+                boolean exito = vlController.agregarVoluntario(nombre, fechaNacimiento, telefono, correo, especialidad);
+                if(!exito){
+                     JOptionPane.showMessageDialog(this, "No se pudo guardar");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Voluntario guardado correctamente.");
                 }
+                
+            }
+            
+            // 3. Mandar al controlador para guardar
+           
+
+            // 4. Verificar resultado
+            
             cargarVoluntarios();
             limpiarCampos();
             
         }catch (Exception e) {
             JOptionPane.showMessageDialog(
-                    this,
-                    "Error: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+                            this,
+                            "No se pudo registrar. Verifique los campos.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
         }
     }
     
@@ -572,5 +867,84 @@ public class FrmVoluntario extends javax.swing.JPanel {
             );
         }
     }
+    
+    private void actualizar() {
+        try {
+            
+            if(!validarFormulario()){
+                JOptionPane.showMessageDialog(
+                            this,
+                            "No se pudo actualizar. Verifique los campos.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                return;
+            }else{
+                int id = Integer.parseInt(txtId.getText());
+                String nombre = txtNombre.getText().trim();
+
+                //FECHA
+                int dia = (Integer) spinnerDia.getValue();
+                int mes = (Integer) spinnerMes.getValue();
+                int anio = Integer.parseInt(txtAnio.getText());
+                LocalDate fechaNacimiento = LocalDate.of(anio, mes, dia);
+
+                String telefono = txtTelefono.getText().trim();
+                String correo = txtCorreo.getText().trim();
+                Especialidad especialidad = (Especialidad) comboEspecialidad.getSelectedItem();
+
+                int confirm = JOptionPane.showConfirmDialog(this,
+                        "¿Seguro que quieres actualizar a este voluntario?",
+                        "Confirmar eliminación",
+                        JOptionPane.YES_NO_OPTION);
+
+                if (confirm == JOptionPane.YES_OPTION) {
+                    boolean exito = vlController.actualizarVoluntario(id, nombre, fechaNacimiento, telefono, correo, especialidad);
+
+                    if (exito) {
+                        JOptionPane.showMessageDialog(this, "Voluntario actualizado correctamente.");
+                        cargarVoluntarios();
+                        limpiarCampos(); // limpia y oculta otra vez
+                    } else {
+                        JOptionPane.showMessageDialog(
+                                this,
+                                "Ocurrio un error al actualizar al Voluntario.",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
+                }
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    private void filtrarTabla(String texto){
+
+        TableRowSorter<javax.swing.table.TableModel> sorter =
+                new TableRowSorter<>(tblVoluntarios.getModel());
+
+        tblVoluntarios.setRowSorter(sorter);
+
+        RowFilter<javax.swing.table.TableModel, Object> filtroNombre =
+                RowFilter.regexFilter("(?i)" + texto, 1);
+
+        RowFilter<javax.swing.table.TableModel, Object> filtroTelefono =
+                RowFilter.regexFilter("(?i)" + texto, 2);
+        
+        RowFilter<javax.swing.table.TableModel, Object> filtroCorreo =
+                RowFilter.regexFilter("(?i)" + texto, 3);
+
+        sorter.setRowFilter(RowFilter.orFilter(Arrays.asList(filtroNombre, filtroTelefono, filtroCorreo)));
+    }
+    
+    
     
 }

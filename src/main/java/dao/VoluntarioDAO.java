@@ -65,10 +65,12 @@ public class VoluntarioDAO implements IVoluntarioDAO{
         }
         return voluntario;
     }
+    
+   
 
     @Override
     public List<Voluntario> obtenerTodos() {
-        String sql = "SELECT * FROM voluntarios";
+        String sql = "SELECT * FROM voluntarios LIMIT 10";
         List<Voluntario> lista = new ArrayList<>();
 
         try (Connection conn = ConexionDB.getConnection(); PreparedStatement ps = conn.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
@@ -100,6 +102,25 @@ public class VoluntarioDAO implements IVoluntarioDAO{
 
         } catch (SQLException e) {
             System.err.println("Error al eliminar voluntario: " + e.getMessage());
+            return false;
+        }
+    }
+
+    @Override
+    public boolean actualizar(Voluntario voluntario) {
+        String sql = "UPDATE voluntarios SET nombre = ?, fecha_nacimiento = ?, telefono = ?, correo = ? WHERE id_voluntario = ?";
+        try (Connection conn = ConexionDB.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, voluntario.getNombre());
+            ps.setDate(2, java.sql.Date.valueOf(voluntario.getFechaNacimiento()));
+            ps.setString(3, voluntario.getTelefono());
+            ps.setString(4, voluntario.getCorreo());
+            ps.setInt(5, voluntario.getIdVoluntario());
+            
+            return ps.executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            System.err.println("Error al actualizar el voluntario: " + e.getMessage());
             return false;
         }
     }
