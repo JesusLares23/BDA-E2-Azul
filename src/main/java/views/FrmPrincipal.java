@@ -227,18 +227,14 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnDocumentarTareaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDocumentarTareaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnDocumentarTareaActionPerformed
-
-    private void btnRegistrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAnimalActionPerformed
         pnlContenido.removeAll();
         pnlContenido.setLayout(new java.awt.BorderLayout());
         
-        pnlContenido.add(new FrmAnimal(), java.awt.BorderLayout.CENTER);
         
+        pnlContenido.add(new FrmTarea3(), java.awt.BorderLayout.CENTER);
         pnlContenido.revalidate();
         pnlContenido.repaint();
-    }//GEN-LAST:event_btnRegistrarAnimalActionPerformed
+    }//GEN-LAST:event_btnDocumentarTareaActionPerformed
 
     /**
      * @param args the command line arguments
