@@ -1,7 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.equipo2.voluntariadorefugio;
 
 import dao.EspecialidadDAO;
@@ -18,13 +17,24 @@ import views.FrmPrincipal;
 public class VoluntariadoRefugio {
 
     public static void main(String[] args) {
-        
-        
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
+        // ----listar especialidades----
+//        EspecialidadDAO espDao = new EspecialidadDAO();
+//        
+//        List<Especialidad> lista = espDao.listarTodas();
+//        
+//        for(Especialidad esp: lista){
+//            System.out.println(esp);
+//        }
+//        ----Registrar Especialiad----
+//        Especialidad esp = new Especialidad(1,"Medico");
+//        ---Registrar Voluntario----
+//        VoluntarioDAO volDao = new VoluntarioDAO();
+//        
+//        Voluntario v = new Voluntario(0, "Cesar", 21, "6442565192", "cesarqmt115@gmail.com", esp);
+//        
+//        volDao.insertar(v);
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -41,40 +51,7 @@ public class VoluntariadoRefugio {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new FrmPrincipal().setVisible(true);
-            }
-        });
-
-        
-        
-        
-        // ----listar especialidades----
-//        EspecialidadDAO espDao = new EspecialidadDAO();
-//        
-//        List<Especialidad> lista = espDao.listarTodas();
-//        
-//        for(Especialidad esp: lista){
-//            System.out.println(esp);
-//        }
-          
-//        ----Registrar Especialiad----
-
-//        Especialidad esp = new Especialidad(1,"Medico");
-
-//        ---Registrar Voluntario----
-
-//        VoluntarioDAO volDao = new VoluntarioDAO();
-//        
-//        Voluntario v = new Voluntario(0, "Cesar", 21, "6442565192", "cesarqmt115@gmail.com", esp);
-//        
-//        volDao.insertar(v);
-        
-        
+        FrmPrincipal fp = new FrmPrincipal();
     }
 }

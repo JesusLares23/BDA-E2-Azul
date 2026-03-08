@@ -11,7 +11,7 @@ CREATE TABLE Especialidades (
 CREATE TABLE Voluntarios (
   id_voluntario int primary key auto_increment,
   nombre varchar(100) not null,
-  edad int not null,
+  fecha_nacimiento date not null,
   correo varchar(50) not null,
   telefono varchar(20) not null,
   id_especialidad int not null,
@@ -34,10 +34,10 @@ CREATE TABLE Animales (
   id_animal int primary key auto_increment,
   nombre varchar(30) not null,
   especie varchar(30) not null,
-  edad int not null,
+  estado_salud varchar(30) not null,
+  fecha_nacimiento date not null,
   fecha_ingreso date not null,
   id_refugio int not null,
-  
   foreign key (id_refugio) references Refugios(id_refugio)
 );
 
@@ -53,12 +53,3 @@ CREATE TABLE Tareas (
   foreign key(id_animal) references Animales(id_animal),
   foreign key(id_refugio) references Refugios(id_refugio)
 );
-
-
-
-
-
-
-
-
-
