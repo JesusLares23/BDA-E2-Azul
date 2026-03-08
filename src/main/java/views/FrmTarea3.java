@@ -22,7 +22,7 @@ private TareaController tareaController;
      */
     public FrmTarea3() {
     tareaController = new TareaController(new TareaDAO());
-    registrarTarea();
+//    registrarTarea();
     initComponents();
 
 
