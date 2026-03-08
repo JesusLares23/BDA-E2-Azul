@@ -23,11 +23,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         initComponents();
         cargarLogo();
         
-
-        
-        
-        
-        
+        this.setVisible(true);
     }
 
     /**
@@ -117,6 +113,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         btnRegistrarAnimal.setFocusable(false);
         btnRegistrarAnimal.setMaximumSize(new java.awt.Dimension(212, 40));
         btnRegistrarAnimal.setPreferredSize(new java.awt.Dimension(180, 40));
+        btnRegistrarAnimal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarAnimalActionPerformed(evt);
+            }
+        });
         pnlBtns.add(btnRegistrarAnimal);
         pnlBtns.add(filler3);
 
@@ -202,23 +203,18 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRegistrarVoluntarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVoluntarioActionPerformed
-        // TODO add your handling code here:
-        
         pnlContenido.removeAll();
         pnlContenido.setLayout(new java.awt.BorderLayout());
 
         pnlContenido.add(new FrmVoluntario(), java.awt.BorderLayout.CENTER);
 
         pnlContenido.revalidate();
-        pnlContenido.repaint();
-        
-        
+        pnlContenido.repaint(); 
     }//GEN-LAST:event_btnRegistrarVoluntarioActionPerformed
 
     private void btnRegistrarRefugioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarRefugioActionPerformed
         pnlContenido.removeAll();
         pnlContenido.setLayout(new java.awt.BorderLayout());
-        
         
         pnlContenido.add(new FrmRefugio(), java.awt.BorderLayout.CENTER);
         pnlContenido.revalidate();
@@ -293,11 +289,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarLogo() {
-    Icon logoIcon = new ImageIcon(new ImageIcon(getClass().getResource("/images/logo.png")).getImage().getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), 0));
+    Icon logoIcon = new ImageIcon(new ImageIcon(getClass()
+            .getResource("/images/logo.png")).getImage()
+            .getScaledInstance(lblLogo.getWidth(), lblLogo.getHeight(), 0));
     
     lblLogo.setIcon(logoIcon);
-    
-    
-}
+    }
 
 }
