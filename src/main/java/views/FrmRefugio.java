@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package views;
 
 import config.ConexionDB;
@@ -31,7 +27,7 @@ public class FrmRefugio extends javax.swing.JPanel {
     public FrmRefugio() {
         initComponents();
         rfController = new RefugioController(new RefugioDAO());
-        configurarTabla();
+        cargarPagina();
         inicializarPaginacion();
 
     }
@@ -64,53 +60,27 @@ public class FrmRefugio extends javax.swing.JPanel {
         lblDescripcion = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         btnRegistrar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblRefugios = new javax.swing.JTable();
         btnSiguiente = new javax.swing.JButton();
         btnAnterior = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtId = new javax.swing.JTextField();
+        btnActualizar = new javax.swing.JButton();
+        txtBuscar = new javax.swing.JTextField();
 
         lblNumeroExterior.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblNumeroExterior.setText("Numero Exterior:");
 
-        txtNumeroExterior.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNumeroExteriorActionPerformed(evt);
-            }
-        });
-
         lblColonia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblColonia.setText("Colonia");
-
-        txtColonia.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtColoniaActionPerformed(evt);
-            }
-        });
 
         lblCalle.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCalle.setText("Calle:");
 
-        txtCalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCalleActionPerformed(evt);
-            }
-        });
-
         lblEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblEstado.setText("Estado:");
-
-        txtEstado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtEstadoActionPerformed(evt);
-            }
-        });
-
-        txtCiudad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCiudadActionPerformed(evt);
-            }
-        });
 
         lblCiudad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCiudad.setText("Ciudad:");
@@ -118,26 +88,8 @@ public class FrmRefugio extends javax.swing.JPanel {
         lblNombreResponsable.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblNombreResponsable.setText("Nombre de Responsable:");
 
-        txtNombreResponsable.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreResponsableActionPerformed(evt);
-            }
-        });
-
         lblCapacidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblCapacidad.setText("Capacidad:");
-
-        txtCapacidad.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCapacidadActionPerformed(evt);
-            }
-        });
-
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
 
         lblNombre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblNombre.setText("Nombre: ");
@@ -156,14 +108,15 @@ public class FrmRefugio extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblRefugios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -174,7 +127,12 @@ public class FrmRefugio extends javax.swing.JPanel {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblRefugios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRefugiosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblRefugios);
 
         btnSiguiente.setText("Siguiente");
         btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
@@ -190,6 +148,36 @@ public class FrmRefugio extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setText("ID:");
+
+        txtId.setEditable(false);
+        txtId.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdActionPerformed(evt);
+            }
+        });
+
+        btnActualizar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        txtBuscar.setText("buscar por nombre");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -197,64 +185,84 @@ public class FrmRefugio extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(58, 58, 58)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                                .addComponent(lblNumeroExterior, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtNumeroExterior, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(lblCiudad)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtCiudad))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(lblColonia)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtColonia))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(lblEstado)
-                                .addComponent(lblCalle))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtCalle, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                                .addComponent(txtEstado))))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(lblCiudad)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtCiudad, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(lblColonia)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(txtColonia))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblEstado)
+                                        .addComponent(lblCalle))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtCalle, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                                        .addComponent(txtEstado))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCapacidad)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblNombreResponsable)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtNombreResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblDescripcion)
+                            .addComponent(lblTitulo)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblNombre)
+                                    .addComponent(jLabel1))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCapacidad)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblNombreResponsable)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lblDescripcion)
-                    .addComponent(lblTitulo)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnRegistrar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                            .addComponent(lblNumeroExterior, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtNumeroExterior, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(42, 42, 42)
+                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnAnterior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(272, 272, 272)))
+                        .addGap(272, 272, 272))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 381, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(150, 150, 150))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addComponent(lblTitulo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblDescripcion)
-                        .addGap(37, 37, 37)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -294,52 +302,21 @@ public class FrmRefugio extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSiguiente))
+                    .addComponent(btnSiguiente)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtNumeroExteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumeroExteriorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNumeroExteriorActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         registrarRefugio();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void txtCapacidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCapacidadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCapacidadActionPerformed
-
-    private void txtNombreResponsableActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreResponsableActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreResponsableActionPerformed
-
-    private void txtCiudadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCiudadActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCiudadActionPerformed
-
-    private void txtEstadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEstadoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtEstadoActionPerformed
-
-    private void txtCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCalleActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCalleActionPerformed
-
-    private void txtColoniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtColoniaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtColoniaActionPerformed
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliminar();
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
         if (currentPage < totalPaginas - 1) {
@@ -358,14 +335,35 @@ public class FrmRefugio extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Ya estás en la primera página.");
         }    }//GEN-LAST:event_btnAnteriorActionPerformed
 
+    private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdActionPerformed
+
+    private void tblRefugiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRefugiosMouseClicked
+        cargarPagina();
+    }//GEN-LAST:event_tblRefugiosMouseClicked
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        actualizar();
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+       buscar();
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAnterior;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSiguiente;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCalle;
     private javax.swing.JLabel lblCapacidad;
     private javax.swing.JLabel lblCiudad;
@@ -376,11 +374,14 @@ public class FrmRefugio extends javax.swing.JPanel {
     private javax.swing.JLabel lblNombreResponsable;
     private javax.swing.JLabel lblNumeroExterior;
     private javax.swing.JLabel lblTitulo;
+    private javax.swing.JTable tblRefugios;
+    private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtCapacidad;
     private javax.swing.JTextField txtCiudad;
     private javax.swing.JTextField txtColonia;
     private javax.swing.JTextField txtEstado;
+    private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtNombreResponsable;
     private javax.swing.JTextField txtNumeroExterior;
@@ -398,51 +399,37 @@ public class FrmRefugio extends javax.swing.JPanel {
 
     }
 
-    private void configurarTabla() {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("Nombre");
-        model.addColumn("Capacidad");
-        model.addColumn("Responsable");
-        model.addColumn("Ciudad");
-        model.addColumn("Estado");
-        model.addColumn("Calle");
-        model.addColumn("Colonia");
-        model.addColumn("Numero exterior");
-
-        jTable1.setModel(model);
-    }
-
     private void inicializarPaginacion() {
-        RefugioDAO dao = new RefugioDAO();
-        totalRegistros = dao.contarRegistros();
-        totalPaginas = (int) Math.ceil((double) totalRegistros / pageSize);
+        totalPaginas = rfController.obtenerTotalPaginas(pageSize);
+
         cargarPagina();
     }
 
     private void cargarPagina() {
 
-        RefugioDAO dao = new RefugioDAO();
-        List<Refugio> lista = dao.obtenerRefugiosPaginados(currentPage, pageSize);
-
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0);
-
-        for (Refugio r : lista) {
-            model.addRow(new Object[]{
-                r.getIdRefugio(),
-                r.getNombre(),
-                r.getCapacidad(),
-                r.getNombreResponsable(),
-                r.getCiudad(),
-                r.getEstado(),
-                r.getCalle(),
-                r.getColonia(),
-                r.getNumeroExterior()
-            });
-        }
+        DefaultTableModel modelo = rfController.obtenerTablaRefugios(currentPage, pageSize);
+        tblRefugios.setModel(modelo);
     }
 
+//    private void cargarDatos() {
+//        int fila = tblRefugios.getSelectedRow();
+//        if (fila >= 0) {
+//            txtId.setText(tblRefugios.getValueAt(fila, 0).toString());
+//            txtNombre.setText(tblRefugios.getValueAt(fila, 1).toString());
+//            txtCapacidad.setText(tblRefugios.getValueAt(fila, 2).toString());
+//            txtNombreResponsable.setText(tblRefugios.getValueAt(fila, 3).toString());
+//            txtCiudad.setText(tblRefugios.getValueAt(fila, 4).toString());
+//            txtEstado.setText(tblRefugios.getValueAt(fila, 5).toString());
+//            txtCalle.setText(tblRefugios.getValueAt(fila, 6).toString());
+//            txtColonia.setText(tblRefugios.getValueAt(fila, 7).toString());
+//            txtNumeroExterior.setText(tblRefugios.getValueAt(fila, 8).toString());
+//
+////            btnGuardar.setText("Actualizar");
+////            btnEliminar.setVisible(true);
+//        }
+//    }
+
+    //CRUD
     private void registrarRefugio() {
 
         try {
@@ -501,7 +488,78 @@ public class FrmRefugio extends javax.swing.JPanel {
         }
 
         limpiarFormulario();
-        inicializarPaginacion();
+        cargarPagina();
+        
+    }
+
+    private void eliminar() {
+        try {
+            int id = Integer.parseInt(txtId.getText());
+
+            int confirm = JOptionPane.showConfirmDialog(this, "Estas seguro que desea eliminar el cliente?", "Confirmacion eliminacion", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean elimino = rfController.eliminarRefugio(id);
+
+                if (elimino == true) {
+                    JOptionPane.showMessageDialog(this, "Refugio eliminado con exito");
+                    return;
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrio un error al eliminado del refugio");
+                }
+
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        limpiarFormulario();
+        cargarPagina();
+        
+    }
+
+    private void actualizar() {
+
+        int id = Integer.parseInt(txtId.getText());
+        String nombre = txtNombre.getText().trim();
+        int capacidad = Integer.parseInt(txtCapacidad.getText());
+        String nombre_responsable = txtNombreResponsable.getText().trim();
+        String ciudad = txtCiudad.getText().trim();
+        String estado = txtEstado.getText().trim();
+        String calle = txtCalle.getText().trim();
+        String colonia = txtColonia.getText().trim();
+        String numero_exterior = txtNumeroExterior.getText().trim();
+
+        int confirm = JOptionPane.showConfirmDialog(this, "Seguro que quieres actualizar a este refugio?",
+                "Confirmar actualizacion",
+                JOptionPane.YES_NO_OPTION);
+        boolean actualizo = rfController.actualizarRefugio(id, nombre, capacidad, nombre_responsable, ciudad, estado, calle, colonia, numero_exterior);
+
+        if (actualizo) {
+            JOptionPane.showMessageDialog(this, "Refugio actualizado correctamente.");
+            limpiarFormulario();
+            
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Ocurrio un error al actualizar el refugio.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        limpiarFormulario();
+        cargarPagina();
+        
+    }
+
+    public void buscar() {
+        String filtro = txtBuscar.getText();
+        if (filtro.isEmpty()) {
+            cargarPagina();
+        }else{
+            tblRefugios.setModel(rfController.obtenerTablaRefugiosFiltrado(filtro));
+        }
     }
 
 }
+
+

@@ -130,8 +130,7 @@ public class RefugioDAO implements IRefugioDAO {
     @Override
     public boolean eliminar(int idRefugio) {
         String sql = "DELETE FROM Refugios WHERE id_refugio = ?";
-        try (Connection conn = ConexionDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+        try (Connection conn = ConexionDB.getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idRefugio);
             return ps.executeUpdate() > 0;
@@ -140,20 +139,20 @@ public class RefugioDAO implements IRefugioDAO {
             return false;
         }
     }
-    
-     // Metodo de paginacion
-    public List<Refugio> obtenerRefugiosPaginados(int page, int pageSize){
-        List <Refugio> lista = new ArrayList<>();
+
+    // Metodo de paginacion
+    public List<Refugio> obtenerRefugiosPaginados(int page, int pageSize) {
+        List<Refugio> lista = new ArrayList<>();
         String sql = "SELECT * FROM Refugios LIMIT ? OFFSET ?";
-        
-        try(Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(sql)){
-            
+
+        try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
+
             ps.setInt(1, pageSize);
-            ps.setInt(2, page*pageSize);
-            
-            ResultSet rs=ps.executeQuery();
-            
-            while(rs.next()){
+            ps.setInt(2, page * pageSize);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
                 Refugio r = new Refugio();
                 r.setIdRefugio(rs.getInt("id_refugio"));
                 r.setNombre(rs.getString("nombre"));
@@ -164,34 +163,68 @@ public class RefugioDAO implements IRefugioDAO {
                 r.setCalle(rs.getString("calle"));
                 r.setColonia(rs.getString("colonia"));
                 r.setNumeroExterior(rs.getString("numero_exterior"));
-                
+
                 lista.add(r);
-                
+
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return lista;
-        
+
     }
-    
-    public int contarRegistros(){
+
+    public int contarRegistros() {
         String sql = "SELECT COUNT(*) FROM refugios";
-        
-        try(Connection con = ConexionDB.getConnection(); 
-            PreparedStatement ps = con.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery()) {
-            
-            if(rs.next()){
+
+        try (Connection con = ConexionDB.getConnection(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+
+            if (rs.next()) {
                 return rs.getInt(1);
             }
-            
-        }catch(SQLException e){
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 0;           
+        return 0;
     }
-    
-    
 
-}
+    
+    @Override
+    public List<Refugio> obtenerTodosPorFiltro(String filtro) {
+        String sql = "SELECT * FROM Refugios  WHERE nombre LIKE ?";
+
+        List<Refugio> lista = new ArrayList<>();
+
+        try (Connection conn = ConexionDB.getConnection(); 
+            PreparedStatement ps = conn.prepareStatement(sql) 
+                ){
+            ps.setString(1, "%" + filtro + "%");
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    Refugio refugio = new Refugio();
+                    refugio.setIdRefugio(rs.getInt("id_refugio"));
+                    refugio.setNombre(rs.getString("nombre"));
+                    refugio.setCapacidad(rs.getInt("capacidad"));
+                    refugio.setNombreResponsable(rs.getString("nombre_responsable"));
+                    refugio.setCiudad(rs.getString("ciudad"));
+                    
+                    refugio.setEstado(rs.getString("estado"));
+                    refugio.setCalle(rs.getString("calle"));
+                    refugio.setColonia(rs.getString("colonia"));
+                    refugio.setNumeroExterior(rs.getString("numero_exterior"));
+
+                    lista.add(refugio);
+                }
+
+            }catch (SQLException ex) {
+            System.err.println("Error al obtener refugios por filtro: "+ ex.getMessage());
+        }
+            return lista;
+
+        }
+    
+   
+        
+    }
