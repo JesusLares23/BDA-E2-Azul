@@ -78,7 +78,7 @@ public class FrmTarea extends javax.swing.JPanel {
         txtIdAnimal = new javax.swing.JTextField();
         lblRefugio = new javax.swing.JLabel();
         txtIdRefugio = new javax.swing.JTextField();
-        lblFechaNacimiento = new javax.swing.JLabel();
+        lblFechaRegistro = new javax.swing.JLabel();
         btnLimpiar = new javax.swing.JButton();
         spinnerDia = new javax.swing.JSpinner();
         lblDia = new javax.swing.JLabel();
@@ -169,9 +169,9 @@ public class FrmTarea extends javax.swing.JPanel {
             }
         });
 
-        lblFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        lblFechaNacimiento.setForeground(new java.awt.Color(0, 0, 0));
-        lblFechaNacimiento.setText("Fecha Nacimiento:");
+        lblFechaRegistro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblFechaRegistro.setForeground(new java.awt.Color(0, 0, 0));
+        lblFechaRegistro.setText("Fecha Registro:");
 
         btnLimpiar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(0, 0, 0));
@@ -361,7 +361,7 @@ public class FrmTarea extends javax.swing.JPanel {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                             .addGap(3, 3, 3)
-                                            .addComponent(lblFechaNacimiento)
+                                            .addComponent(lblFechaRegistro)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(lblAnioObligatorio))
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -397,7 +397,7 @@ public class FrmTarea extends javax.swing.JPanel {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(35, 35, 35)
                         .addComponent(btnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -462,7 +462,7 @@ public class FrmTarea extends javax.swing.JPanel {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblFechaNacimiento)
+                            .addComponent(lblFechaRegistro)
                             .addComponent(lblAnioObligatorio))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -574,7 +574,7 @@ public class FrmTarea extends javax.swing.JPanel {
     private javax.swing.JLabel lblAnimalObligatorio;
     private javax.swing.JLabel lblAnioObligatorio;
     private javax.swing.JLabel lblDia;
-    private javax.swing.JLabel lblFechaNacimiento;
+    private javax.swing.JLabel lblFechaRegistro;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblMes;
     private javax.swing.JLabel lblRefugio;
