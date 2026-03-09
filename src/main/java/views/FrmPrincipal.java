@@ -242,7 +242,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlContenido.setLayout(new java.awt.BorderLayout());
         
         
-        pnlContenido.add(new FrmTarea3(), java.awt.BorderLayout.CENTER);
+        pnlContenido.add(new FrmTarea(), java.awt.BorderLayout.CENTER);
         pnlContenido.revalidate();
         pnlContenido.repaint();
     }//GEN-LAST:event_btnDocumentarTareaActionPerformed
