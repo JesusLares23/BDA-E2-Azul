@@ -1,4 +1,4 @@
-package com.mycompany.clasescorregidas;
+package controllers;
 
 import interfaces.ITareaDAO;
 import java.time.LocalDateTime;
