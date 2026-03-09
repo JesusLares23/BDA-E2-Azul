@@ -1,4 +1,4 @@
-package com.mycompany.clasescorregidas;
+package dao;
 
 import config.ConexionDB;
 import interfaces.ITareaDAO;
