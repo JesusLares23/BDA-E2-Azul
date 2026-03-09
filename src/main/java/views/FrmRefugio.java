@@ -69,6 +69,7 @@ public class FrmRefugio extends javax.swing.JPanel {
         txtId = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
         txtBuscar = new javax.swing.JTextField();
+        btnLimpiar = new javax.swing.JButton();
 
         lblNumeroExterior.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblNumeroExterior.setText("Numero Exterior:");
@@ -178,6 +179,13 @@ public class FrmRefugio extends javax.swing.JPanel {
             }
         });
 
+        btnLimpiar.setText("Limpiar Campos");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,24 +213,25 @@ public class FrmRefugio extends javax.swing.JPanel {
                                         .addComponent(txtCalle, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                                         .addComponent(txtEstado))))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCapacidad)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtCapacidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblNombreResponsable)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txtNombreResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblDescripcion)
                             .addComponent(lblTitulo)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblNombre)
-                                    .addComponent(jLabel1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(lblCapacidad)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(txtCapacidad))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(lblNombre)
+                                        .addComponent(jLabel1))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -235,7 +244,9 @@ public class FrmRefugio extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 613, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,7 +316,9 @@ public class FrmRefugio extends javax.swing.JPanel {
                     .addComponent(btnSiguiente)
                     .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -340,7 +353,8 @@ public class FrmRefugio extends javax.swing.JPanel {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void tblRefugiosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRefugiosMouseClicked
-        cargarPagina();
+
+        cargarDatos();
     }//GEN-LAST:event_tblRefugiosMouseClicked
 
     private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
@@ -352,14 +366,19 @@ public class FrmRefugio extends javax.swing.JPanel {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-       buscar();
+        buscar();
     }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+       limpiarFormulario();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSiguiente;
     private javax.swing.JLabel jLabel1;
@@ -388,6 +407,7 @@ public class FrmRefugio extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void limpiarFormulario() {
+        txtId.setText("");
         txtNombre.setText("");
         txtCapacidad.setText("");
         txtNombreResponsable.setText("");
@@ -411,23 +431,23 @@ public class FrmRefugio extends javax.swing.JPanel {
         tblRefugios.setModel(modelo);
     }
 
-//    private void cargarDatos() {
-//        int fila = tblRefugios.getSelectedRow();
-//        if (fila >= 0) {
-//            txtId.setText(tblRefugios.getValueAt(fila, 0).toString());
-//            txtNombre.setText(tblRefugios.getValueAt(fila, 1).toString());
-//            txtCapacidad.setText(tblRefugios.getValueAt(fila, 2).toString());
-//            txtNombreResponsable.setText(tblRefugios.getValueAt(fila, 3).toString());
-//            txtCiudad.setText(tblRefugios.getValueAt(fila, 4).toString());
-//            txtEstado.setText(tblRefugios.getValueAt(fila, 5).toString());
-//            txtCalle.setText(tblRefugios.getValueAt(fila, 6).toString());
-//            txtColonia.setText(tblRefugios.getValueAt(fila, 7).toString());
-//            txtNumeroExterior.setText(tblRefugios.getValueAt(fila, 8).toString());
-//
-////            btnGuardar.setText("Actualizar");
-////            btnEliminar.setVisible(true);
-//        }
-//    }
+    private void cargarDatos() {
+        int fila = tblRefugios.getSelectedRow();
+        if (fila >= 0) {
+            txtId.setText(tblRefugios.getValueAt(fila, 0).toString());
+            txtNombre.setText(tblRefugios.getValueAt(fila, 1).toString());
+            txtCapacidad.setText(tblRefugios.getValueAt(fila, 2).toString());
+            txtNombreResponsable.setText(tblRefugios.getValueAt(fila, 3).toString());
+            txtCiudad.setText(tblRefugios.getValueAt(fila, 4).toString());
+            txtEstado.setText(tblRefugios.getValueAt(fila, 5).toString());
+            txtCalle.setText(tblRefugios.getValueAt(fila, 6).toString());
+            txtColonia.setText(tblRefugios.getValueAt(fila, 7).toString());
+            txtNumeroExterior.setText(tblRefugios.getValueAt(fila, 8).toString());
+
+//            btnGuardar.setText("Actualizar");
+//            btnEliminar.setVisible(true);
+        }
+    }
 
     //CRUD
     private void registrarRefugio() {
@@ -489,7 +509,7 @@ public class FrmRefugio extends javax.swing.JPanel {
 
         limpiarFormulario();
         cargarPagina();
-        
+
     }
 
     private void eliminar() {
@@ -516,7 +536,7 @@ public class FrmRefugio extends javax.swing.JPanel {
 
         limpiarFormulario();
         cargarPagina();
-        
+
     }
 
     private void actualizar() {
@@ -539,7 +559,6 @@ public class FrmRefugio extends javax.swing.JPanel {
         if (actualizo) {
             JOptionPane.showMessageDialog(this, "Refugio actualizado correctamente.");
             limpiarFormulario();
-            
 
         } else {
             JOptionPane.showMessageDialog(this, "Ocurrio un error al actualizar el refugio.",
@@ -548,18 +567,16 @@ public class FrmRefugio extends javax.swing.JPanel {
         }
         limpiarFormulario();
         cargarPagina();
-        
+
     }
 
     public void buscar() {
         String filtro = txtBuscar.getText();
         if (filtro.isEmpty()) {
             cargarPagina();
-        }else{
+        } else {
             tblRefugios.setModel(rfController.obtenerTablaRefugiosFiltrado(filtro));
         }
     }
 
 }
-
-
