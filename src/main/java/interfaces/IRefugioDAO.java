@@ -4,6 +4,11 @@
  */
 package interfaces;
 
+import config.ConexionDB;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 import models.Refugio;
 
@@ -26,6 +31,14 @@ public interface IRefugioDAO {
     //metodo para eliminar un refugio (delete)
     public boolean eliminar(int idRefugio);
     
+    public List<Refugio> obtenerRefugiosPaginados(int page, int pagesize);
+    
+    public int contarRegistros();
+    
+    List<Refugio> obtenerTodosPorFiltro(String filtro);
+    
+    
+ 
     
     
     
