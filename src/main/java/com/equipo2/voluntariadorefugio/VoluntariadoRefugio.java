@@ -1,7 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.equipo2.voluntariadorefugio;
 
 import dao.EspecialidadDAO;
@@ -9,6 +8,7 @@ import dao.VoluntarioDAO;
 import java.util.List;
 import models.Especialidad;
 import models.Voluntario;
+import views.FrmPrincipal;
 
 /**
  *
@@ -17,7 +17,7 @@ import models.Voluntario;
 public class VoluntariadoRefugio {
 
     public static void main(String[] args) {
-        
+
         // ----listar especialidades----
 //        EspecialidadDAO espDao = new EspecialidadDAO();
 //        
@@ -26,19 +26,32 @@ public class VoluntariadoRefugio {
 //        for(Especialidad esp: lista){
 //            System.out.println(esp);
 //        }
-          
 //        ----Registrar Especialiad----
-
 //        Especialidad esp = new Especialidad(1,"Medico");
-
 //        ---Registrar Voluntario----
-
 //        VoluntarioDAO volDao = new VoluntarioDAO();
 //        
 //        Voluntario v = new Voluntario(0, "Cesar", 21, "6442565192", "cesarqmt115@gmail.com", esp);
 //        
 //        volDao.insertar(v);
-        
-        
+
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(FrmPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        FrmPrincipal fp = new FrmPrincipal();
     }
 }

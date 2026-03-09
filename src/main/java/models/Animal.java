@@ -8,26 +8,26 @@ import java.time.Period;
  */
 public class Animal {
     private int idAnimal;
-    private Refugio refugio;
     private String nombre;
     private String especie;
     private LocalDate fechaNacimiento;
     private String estadoSalud;
     private LocalDate fechaIngreso;
+    private int idRefugio;
 
     public Animal() {
     }
 
     public Animal(int idAnimal, String nombre,  String estadoSalud, 
             LocalDate fechaNacimiento, String especie, LocalDate fechaIngreso, 
-            Refugio refugio) {
+            int idRefugio) {
         this.idAnimal = idAnimal;
         this.nombre = nombre;
         this.especie = especie;
         this.estadoSalud = estadoSalud;
         this.fechaNacimiento = fechaNacimiento;
         this.fechaIngreso = fechaIngreso;
-        this.refugio = refugio;
+        this.idRefugio = idRefugio;
     }
 
     public int getIdAnimal() {
@@ -62,6 +62,7 @@ public class Animal {
         return fechaNacimiento;
     }
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        String str = "hola";
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -83,11 +84,11 @@ public class Animal {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Refugio getRefugio() {
-        return refugio;
+    public int getIdRefugio() {
+        return idRefugio;
     }
-    public void setRefugio(Refugio refugio) {
-        this.refugio = refugio;
+    public void setIdRefugio(int idRefugio) {
+        this.idRefugio = idRefugio;
     }    
     
 }

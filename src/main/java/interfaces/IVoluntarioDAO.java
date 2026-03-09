@@ -14,6 +14,7 @@ import models.Voluntario;
 public interface IVoluntarioDAO {
     boolean insertar(Voluntario voluntario);
     Voluntario obtenerPorId(int idVoluntario);
+    boolean actualizar(Voluntario voluntario);
     List<Voluntario> obtenerTodos();
     boolean eliminar(int idVoluntario);
 }
