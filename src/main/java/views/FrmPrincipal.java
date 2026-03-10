@@ -247,6 +247,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlContenido.repaint();
     }//GEN-LAST:event_btnDocumentarTareaActionPerformed
 
+    private void btnRegistrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarAnimalActionPerformed
+        pnlContenido.removeAll();
+        pnlContenido.setLayout(new java.awt.BorderLayout());
+        
+        pnlContenido.add(new FrmAnimal(), java.awt.BorderLayout.CENTER);
+        pnlContenido.revalidate();
+        pnlContenido.repaint();
+    }//GEN-LAST:event_btnRegistrarAnimalActionPerformed
+
     /**
      * @param args the command line arguments
      */

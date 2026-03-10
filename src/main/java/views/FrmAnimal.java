@@ -2,6 +2,12 @@
 package views;
 
 import controllers.AnimalController;
+import java.awt.Color;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -9,13 +15,21 @@ import controllers.AnimalController;
  */
 public class FrmAnimal extends javax.swing.JPanel {
     
-    AnimalController aController = new AnimalController();
+    AnimalController aController;
+    private int currentPage = 0;
+    private int pageSize = 2;
+    private String currentFilter = "";
 
     /**
      * Creates new form FrmAnimal
      */
     public FrmAnimal() {
         initComponents();
+        aController = new AnimalController();
+        cargarAnimalesPaginados();
+        cargarEstados();
+        
+        btnEliminar.setVisible(false);
     }
 
     /**
@@ -46,11 +60,11 @@ public class FrmAnimal extends javax.swing.JPanel {
         scrAnimales = new javax.swing.JScrollPane();
         tblAnimales = new javax.swing.JTable();
         txtFiltro = new javax.swing.JTextField();
-        cmbFiltro = new javax.swing.JComboBox<>();
         btnAnterior = new javax.swing.JButton();
         btnSiguiente = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTitulo.setText("Registro de animales");
@@ -63,19 +77,19 @@ public class FrmAnimal extends javax.swing.JPanel {
 
         txtId.setEditable(false);
         txtId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        txtId.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtId.setPreferredSize(new java.awt.Dimension(40, 40));
 
         lblNombre.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblNombre.setText("Nombre:");
 
-        txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        txtNombre.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtNombre.setPreferredSize(new java.awt.Dimension(40, 40));
 
         lblEspecie.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         lblEspecie.setText("Especie:");
 
-        txtEspecie.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        txtEspecie.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtEspecie.setPreferredSize(new java.awt.Dimension(40, 40));
 
         lblEspecie1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -98,7 +112,7 @@ public class FrmAnimal extends javax.swing.JPanel {
         lblIdRefugio.setText("Refugio:");
 
         txtIdRefugio.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtIdRefugio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        txtIdRefugio.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         txtIdRefugio.setPreferredSize(new java.awt.Dimension(40, 40));
 
         tblAnimales.setModel(new javax.swing.table.DefaultTableModel(
@@ -109,7 +123,7 @@ public class FrmAnimal extends javax.swing.JPanel {
                 {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NOMBRE", "ESPECIE", "ESTADO", "FCHNAC", "FCHING", "REFUGIO"
+                "ID", "NOMBRE", "ESPECIE", "ESTADO", "FCHNAC", "FCHINGR", "REFUGIO"
             }
         ) {
             Class[] types = new Class [] {
@@ -128,6 +142,11 @@ public class FrmAnimal extends javax.swing.JPanel {
             }
         });
         tblAnimales.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        tblAnimales.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblAnimalesMouseClicked(evt);
+            }
+        });
         scrAnimales.setViewportView(tblAnimales);
         if (tblAnimales.getColumnModel().getColumnCount() > 0) {
             tblAnimales.getColumnModel().getColumn(0).setMinWidth(30);
@@ -142,17 +161,50 @@ public class FrmAnimal extends javax.swing.JPanel {
         }
 
         txtFiltro.setPreferredSize(new java.awt.Dimension(40, 40));
-
-        cmbFiltro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbFiltro.setSelectedIndex(-1);
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
 
         btnAnterior.setText("Anterior");
+        btnAnterior.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAnteriorActionPerformed(evt);
+            }
+        });
 
         btnSiguiente.setText("Siguiente");
+        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSiguienteActionPerformed(evt);
+            }
+        });
 
+        btnEliminar.setBackground(new java.awt.Color(218, 32, 32));
+        btnEliminar.setForeground(new java.awt.Color(255, 255, 255));
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
+        btnGuardar.setBackground(new java.awt.Color(0, 134, 255));
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -163,7 +215,7 @@ public class FrmAnimal extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblTitulo)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(lblFchNac)
                             .addComponent(lblEspecie1)
                             .addComponent(lblFchIngreso)
@@ -172,35 +224,31 @@ public class FrmAnimal extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblID)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
                                 .addComponent(lblIdRefugio)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtIdRefugio, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtIdRefugio, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(lblEspecie)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtEspecie, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
-                                .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(cmbEstadoSalud, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(calFchNac, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE))
-                            .addComponent(calFchIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtEspecie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbEstadoSalud, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(calFchNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnGuardar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCancelar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar))
+                            .addComponent(calFchIngreso, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(cmbFiltro, 0, 124, Short.MAX_VALUE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(btnSiguiente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(scrAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAnterior, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSiguiente, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(scrAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(txtFiltro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -210,15 +258,13 @@ public class FrmAnimal extends javax.swing.JPanel {
                 .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblIndiciacion)
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblIdRefugio)
-                        .addComponent(txtIdRefugio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(cmbFiltro))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblID, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIdRefugio)
+                    .addComponent(txtIdRefugio, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -242,9 +288,11 @@ public class FrmAnimal extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(calFchIngreso, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(scrAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
@@ -252,19 +300,53 @@ public class FrmAnimal extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnAnterior, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnSiguiente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        guardarAnimal();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void tblAnimalesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblAnimalesMouseClicked
+        cargarDatos();
+    }//GEN-LAST:event_tblAnimalesMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        limpiarCampos();
+       }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        eliminarAnimal();
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        currentFilter = txtFiltro.getText().trim();
+        currentPage = 0;
+        cargarAnimalesPaginados();
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
+    private void btnAnteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnteriorActionPerformed
+        if (currentPage > 0) {
+            currentPage--;
+            cargarAnimalesPaginados();
+        }
+    }//GEN-LAST:event_btnAnteriorActionPerformed
+
+    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
+        currentPage++;
+        cargarAnimalesPaginados();
+    }//GEN-LAST:event_btnSiguienteActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnterior;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnSiguiente;
     private com.toedter.calendar.JDateChooser calFchIngreso;
     private com.toedter.calendar.JDateChooser calFchNac;
     private javax.swing.JComboBox<String> cmbEstadoSalud;
-    private javax.swing.JComboBox<String> cmbFiltro;
     private javax.swing.JLabel lblEspecie;
     private javax.swing.JLabel lblEspecie1;
     private javax.swing.JLabel lblFchIngreso;
@@ -282,4 +364,292 @@ public class FrmAnimal extends javax.swing.JPanel {
     private javax.swing.JTextField txtIdRefugio;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+    private void guardarAnimal() {
+        setDefaultCampos();
+        try {
+            // 1. Tomar datos de los campos
+            String nombre = txtNombre.getText().trim();
+            String especie = txtEspecie.getText().trim();
+            String estadoSalud = (String) cmbEstadoSalud.getSelectedItem();
+            
+            LocalDate fchNac = null;
+            LocalDate fchIngr = null;
+            
+            if (calFchNac.getDate() != null) {
+                fchNac = calFchNac.getDate().toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+            if (calFchIngreso.getDate() != null) {
+                fchIngr = calFchIngreso.getDate().toInstant()
+                        .atZone(ZoneId.systemDefault()).toLocalDate();
+            }
+            
+            int idRefugio = Integer.parseInt(txtIdRefugio.getText());
+            
+            // 2. Validación de campos
+            if (nombre.isEmpty() || especie.isEmpty() || estadoSalud.isEmpty()
+                    || fchNac == null || fchIngr == null || 
+                    txtIdRefugio.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, 
+                        "Todos los campos son obligatorios", 
+                        "Error", 
+                        JOptionPane.WARNING_MESSAGE
+                );
+                
+                if (nombre.isEmpty()) {
+                    txtNombre.setBorder(BorderFactory
+                            .createLineBorder(Color.RED,1));
+                }
+                if (especie.isEmpty()) {
+                    txtEspecie.setBorder(BorderFactory
+                            .createLineBorder(Color.RED,1));
+                }
+                if (estadoSalud.isEmpty() || estadoSalud == null) {
+                    cmbEstadoSalud.setBorder(BorderFactory
+                            .createLineBorder(Color.RED,1));
+                }
+                if (fchNac == null) {
+                    calFchNac.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                }
+                if (fchIngr == null) {
+                    calFchIngreso.setBorder(BorderFactory.createLineBorder(Color.RED,1));
+                }
+                if (txtIdRefugio.getText().isEmpty()) {
+                    txtIdRefugio.setBorder(BorderFactory
+                            .createLineBorder(Color.RED,1));
+                }
+                return;
+            }
+            
+            if (!nombre.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "El nombre solo debe contener letras.",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                txtNombre.setBorder(BorderFactory.createLineBorder(Color.RED,2));
+                txtNombre.requestFocus();
+                return;
+            }
+            
+            if (!especie.matches("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+")) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "La especie solo debe contener letras.",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                txtEspecie.setBorder(BorderFactory.createLineBorder(Color.RED,2));
+                txtEspecie.requestFocus();
+                return;
+            }
+            
+            if (fchNac.isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "El animal tiene que haber nacido ya.",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            
+            if (fchIngr.isAfter(LocalDate.now())) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "No se pueden pre-ingresar animales en los refugios.",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            
+            if (btnGuardar.getText().equals("Guardar")) {
+                // 3. Mandar al controlador para guardar
+                boolean exito = aController.agregarAnimal(nombre, especie, 
+                        estadoSalud, fchNac, fchIngr, idRefugio);
+                
+                // 4. Verificar resultado
+                if (exito) {
+                    JOptionPane.showMessageDialog(this, 
+                            "Animal guardado correctamente");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Ocurrio un error al guardar el animal",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            } else {
+                // Actualizar
+                txtId.setEditable(true);
+                int id = Integer.parseInt(txtId.getText());
+                
+                boolean exito = aController.actualizarAnimal(id, nombre, 
+                        especie, estadoSalud, fchNac, fchIngr, idRefugio);
+                
+                if (exito) {
+                    JOptionPane.showMessageDialog(this, 
+                            "Animal actualizado correctamente.");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Ocurrio un error al actualizar los datos del animal.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+            
+            cargarAnimales();
+            limpiarCampos();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    private void eliminarAnimal() {
+        try {
+            int id = Integer.parseInt(txtId.getText());
+            
+             int confirm = JOptionPane.showConfirmDialog(this,
+                    "¿Seguro que quieres eliminar este animal?",
+                    "Confirmar eliminación",
+                    JOptionPane.YES_NO_OPTION);
+            
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean exito = aController.eliminarAnimal(id);
+                
+                if (exito) {
+                    JOptionPane.showMessageDialog(this, "Animal eliminado correctamente.");
+                    cargarAnimales();
+                    limpiarCampos();
+                } else {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Ocurrio un error al eliminar al animal.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(
+                    this,
+                    "Error: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE
+            );
+        }
+    }
+    
+    private void cargarAnimales() {
+        tblAnimales.setModel(aController.obtenerTablaAnimales());
+    }
+    
+    public void cargarEstados() {
+        String[] items = aController.getEstadosValidos().toArray(new String[0]);
+        DefaultComboBoxModel<String> modelo = new DefaultComboBoxModel<>(items);
+        cmbEstadoSalud.setModel(modelo);
+    }
+    
+    public void limpiarCampos() {
+        txtId.setText("");
+        txtNombre.setText("");
+        txtEspecie.setText("");
+        cmbEstadoSalud.setSelectedItem(null);
+        calFchNac.setDate(null);  
+        calFchIngreso.setDate(null); 
+        txtIdRefugio.setText("");
+        
+        btnGuardar.setText("Guardar");
+        btnEliminar.setVisible(false);
+    }
+    
+    public void cargarDatos() {
+        int fila = tblAnimales.getSelectedRow();
+        if (fila >= 0) {
+            txtId.setText(tblAnimales.getValueAt(fila, 0).toString());
+            txtNombre.setText(tblAnimales.getValueAt(fila, 1).toString());
+            txtEspecie.setText(tblAnimales.getValueAt(fila, 2).toString());
+            cmbEstadoSalud.setSelectedItem(tblAnimales.getValueAt(fila, 3)
+                    .toString());
+            
+            Object fchNacObj = tblAnimales.getValueAt(fila, 4);
+            if (fchNacObj != null) {
+                try {
+                    // If it's a java.sql.Date or java.util.Date
+                    if (fchNacObj instanceof java.util.Date) {
+                        calFchNac.setDate((java.util.Date) fchNacObj);
+                    } else if (fchNacObj instanceof LocalDate) {
+                        // If it's a LocalDate, convert to java.util.Date
+                        LocalDate localDate = (LocalDate) fchNacObj;
+                        calFchNac.setDate(java.util.Date.from(localDate.atStartOfDay()
+                                .atZone(ZoneId.systemDefault()).toInstant()));
+                    }
+                } catch (Exception e) {
+                    calFchNac.setDate(null);
+                }
+            }
+
+
+            Object fchIngrObj = tblAnimales.getValueAt(fila, 5);
+            if (fchIngrObj != null) {
+                try {
+                    if (fchIngrObj instanceof java.util.Date) {
+                        calFchIngreso.setDate((java.util.Date) fchIngrObj);
+                    } else if (fchIngrObj instanceof LocalDate) {
+                        LocalDate localDate = (LocalDate) fchIngrObj;
+                        calFchIngreso.setDate(java.util.Date.from(localDate.atStartOfDay()
+                                .atZone(ZoneId.systemDefault()).toInstant()));
+                    }
+                } catch (Exception e) {
+                    calFchIngreso.setDate(null);
+                }
+            }
+            
+            txtIdRefugio.setText(tblAnimales.getValueAt(fila, 6).toString());
+            
+            btnGuardar.setText("Actualizar");
+            btnEliminar.setVisible(true);
+        }
+    }
+    
+    private void cargarAnimalesPaginados() {
+        int offset = currentPage * pageSize;
+        tblAnimales.setModel(aController.obtenerTablaAnimalesPaginados(offset, pageSize, currentFilter));
+        actualizarBotones();
+    }
+
+    private void actualizarBotones() {
+        int total = aController.contarAnimales(currentFilter);
+        btnAnterior.setEnabled(currentPage > 0);
+        btnSiguiente.setEnabled((currentPage + 1) * pageSize < total);
+    }
+    
+    public void setDefaultCampos() {
+        txtNombre.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        
+        txtEspecie.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        
+        cmbEstadoSalud.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        
+        calFchNac.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        
+        calFchIngreso.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+        
+        txtIdRefugio.setBorder(BorderFactory.createLineBorder(Color.BLACK,1));
+    }
+    
+    
+    
 }

@@ -26,6 +26,10 @@ public class AnimalController {
     public AnimalController() {
         this.animalDAO = new AnimalDAO();
     }
+
+    public List<String> getEstadosValidos() {
+        return estadosValidos;
+    }
     
     public boolean agregarAnimal(String nombre, String especie, 
             String estadoSalud, LocalDate fechaNacimiento, LocalDate fechaIngreso, 
@@ -145,6 +149,29 @@ public class AnimalController {
                 a.getFechaIngreso(), a.getIdRefugio()});
         }
         return modelo;
+    }
+    
+    public DefaultTableModel obtenerTablaAnimalesPaginados(int offset, 
+            int limit, String filtro) {
+        String[] columnas = {"ID", "NOMBRE", "ESPECIE", "SALUD", "FCHNAC", 
+            "FCHINGR", "REFUGIO"};
+        DefaultTableModel modelo = new DefaultTableModel(null, columnas);
+
+        List<Animal> lista = ((AnimalDAO)animalDAO)
+                .obtenerAnimalesPaginados(offset, limit, filtro);
+
+        for (Animal a : lista) {
+            modelo.addRow(new Object[]{
+                a.getIdAnimal(), a.getNombre(), a.getEspecie(), 
+                a.getEstadoSalud(), a.getFechaNacimiento(), 
+                a.getFechaIngreso(), a.getIdRefugio()
+            });
+        }
+        return modelo;
+    }
+
+    public int contarAnimales(String filtro) {
+        return ((AnimalDAO)animalDAO).contarAnimales(filtro);
     }
     
 }
