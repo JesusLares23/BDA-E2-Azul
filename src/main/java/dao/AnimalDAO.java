@@ -95,7 +95,6 @@ public class AnimalDAO implements IAnimalDAO {
             
             while (rs.next()) {
                 Animal animal = new Animal();
-                animal = new Animal();
                 animal.setIdAnimal(rs.getInt("id_animal"));
                 animal.setNombre(rs.getString("nombre"));
                 animal.setEspecie(rs.getString("especie"));
@@ -117,6 +116,64 @@ public class AnimalDAO implements IAnimalDAO {
         return lista;
     }
     
+    public List<Animal> obtenerAnimalesPaginados(int offset, int limit, String filtro) {
+        String query = "SELECT * FROM Animales "
+                + "WHERE nombre LIKE ? "
+                + "OR especie LIKE ? "
+                + "OR estado_salud LIKE ? "
+                + "ORDER BY id_animal LIMIT ? OFFSET ?";
+        List<Animal> lista = new ArrayList<>();
+
+        try (Connection con = ConexionDB.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(query);
+            String searchPattern = "%" + filtro + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+            ps.setInt(4, limit);
+            ps.setInt(5, offset);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Animal animal = new Animal();
+                    animal.setIdAnimal(rs.getInt("id_animal"));
+                    animal.setNombre(rs.getString("nombre"));
+                    animal.setEspecie(rs.getString("especie"));
+                    animal.setEstadoSalud(rs.getString("estado_salud"));
+                    animal.setFechaNacimiento(rs.getDate("fecha_nacimiento").toLocalDate());
+                    animal.setFechaIngreso(rs.getDate("fecha_ingreso").toLocalDate());
+                    animal.setIdRefugio(rs.getInt("id_refugio"));
+                    lista.add(animal);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return lista;
+    }
+
+    public int contarAnimales(String filtro) {
+        String query = "SELECT COUNT(*) FROM Animales "
+                + "WHERE nombre LIKE ? OR especie LIKE ? OR estado_salud LIKE ?";
+
+        try (Connection con = ConexionDB.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(query);
+            String searchPattern = "%" + filtro + "%";
+            ps.setString(1, searchPattern);
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return 0;
+    }
+    
     @Override
     public boolean actualizar(Animal animal) {
         String query = "UPDATE Animales SET nombre = ?, especie = ?, "
@@ -132,6 +189,7 @@ public class AnimalDAO implements IAnimalDAO {
             ps.setDate(4, Date.valueOf(animal.getFechaNacimiento()));
             ps.setDate(5, Date.valueOf(animal.getFechaIngreso()));
             ps.setInt(6, animal.getIdRefugio());
+            ps.setInt(7, animal.getIdAnimal());
             
             return ps.executeUpdate() > 0;
             
