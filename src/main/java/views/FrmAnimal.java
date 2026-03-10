@@ -466,6 +466,16 @@ public class FrmAnimal extends javax.swing.JPanel {
                 return;
             }
             
+            if (fchIngr.isBefore(fchNac)) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "No se puede ingresar al animal antes de que haya nacido.",
+                    "Error",
+                    JOptionPane.WARNING_MESSAGE
+                );
+                return;
+            }
+            
             if (btnGuardar.getText().equals("Guardar")) {
                 // 3. Mandar al controlador para guardar
                 boolean exito = aController.agregarAnimal(nombre, especie, 

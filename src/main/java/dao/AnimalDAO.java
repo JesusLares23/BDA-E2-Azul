@@ -48,7 +48,7 @@ public class AnimalDAO implements IAnimalDAO {
     
     @Override
     public Animal obtenerPorId(int idAnimal) {
-        String query = "SELECT * FROM Animales WHERE idAnimal = ?";
+        String query = "SELECT * FROM Animales WHERE id_animal = ?";
         Animal animal = null;
         
         try (

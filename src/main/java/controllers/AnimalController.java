@@ -56,6 +56,11 @@ public class AnimalController {
                     + "día de hoy");
             return false;
         }
+        if (fechaIngreso.isBefore(fechaNacimiento)) {
+            System.err.println("La fecha de ingreso no puede ser antes del dia"
+                    + "de nacimiento del animal");
+            return false;
+        }
         if (idRefugio <= 0) {
             System.out.println("ID de refugio inválido");
             return false;
