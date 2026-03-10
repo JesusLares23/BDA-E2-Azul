@@ -222,15 +222,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pnlContenido.repaint();
     }//GEN-LAST:event_btnRegistrarRefugioActionPerformed
 
-    private void btnRegistrarAnimalActionPerformed(java.awt.event.ActionEvent evt) {                                                       
-        pnlContenido.removeAll();
-        pnlContenido.setLayout(new java.awt.BorderLayout());
-
-        pnlContenido.add(new FrmAnimal(), java.awt.BorderLayout.CENTER);
-
-        pnlContenido.revalidate();
-        pnlContenido.repaint(); 
-    }
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
